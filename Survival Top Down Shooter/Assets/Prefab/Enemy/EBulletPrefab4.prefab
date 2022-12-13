@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 939852520499113781}
   - component: {fileID: 1967637739935771885}
   - component: {fileID: 138312584933034468}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: EBulletPrefab4
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!70 &1967637739935771885
 CapsuleCollider2D:

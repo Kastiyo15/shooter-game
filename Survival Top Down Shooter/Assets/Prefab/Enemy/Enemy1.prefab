@@ -296,8 +296,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreValue: 1
-  _speed: 3
-  _rotationSpeed: 3
+  _speed: 6
+  _rotationSpeed: 1.75
   Timer: 0
   _rb: {fileID: 8761807065153987534}
 --- !u!114 &867739104533242432
@@ -312,8 +312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b11d70c8b1a63469054ff318d72cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fireRate: 2
-  _bulletSpeed: 15
+  _fireRate: 1
+  _bulletSpeed: 20
   _bulletPrefab: {fileID: 5279461290671761552, guid: 63f17a300d685f3469bb90020070b4f0, type: 3}
   _firePoint: {fileID: 1066533116985021516}
 --- !u!114 &-3357626081319709645

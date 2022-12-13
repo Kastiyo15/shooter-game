@@ -165,7 +165,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -185,7 +185,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -523350623
   m_SortingLayer: 3
-  m_SortingOrder: 10
+  m_SortingOrder: 128
   m_Sprite: {fileID: -2413806693520163455, guid: 43c346bb07414d843bf09dfd256f3d6e, type: 3}
   m_Color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
   m_FlipX: 0
@@ -212,7 +212,7 @@ MonoBehaviour:
   _cam: {fileID: 0}
   _player: {fileID: 5928458574748499128}
   _speed: 100
-  _radius: 9
+  _radius: 8
 --- !u!50 &5928458573332021814
 Rigidbody2D:
   serializedVersion: 4
@@ -348,7 +348,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1257978549
   m_SortingLayer: 1
-  m_SortingOrder: 5
+  m_SortingOrder: 51
   m_Sprite: {fileID: 21300000, guid: 55f00fa02972e314da967f41d78bd26a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rb: {fileID: 5928458574748499122}
   _cam: {fileID: 0}
-  _speed: 3
+  _speed: 2.5
 --- !u!114 &5928458574748499124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,6 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraShake: {fileID: 0}
+  _enemyScore: {fileID: 0}
 --- !u!114 &5928458574748499129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,7 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashMaterial: {fileID: 2100000, guid: 39568032b76a33d4db209835d5972386, type: 2}
-  duration: 0.125
+  duration: 0.1
 --- !u!114 &1249662942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,5 +574,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4011bb3dd8e7a042941ede01d631466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialPosition: {x: 4, y: 1}
+  _initialPosition: {x: 0, y: 0}
   _messagePrefab: {fileID: 5168503116019310776, guid: 8024857a8b3e5444f8b17963bba107f5, type: 3}

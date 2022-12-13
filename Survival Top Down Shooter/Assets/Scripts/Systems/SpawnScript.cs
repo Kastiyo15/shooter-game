@@ -10,8 +10,8 @@ public class SpawnScript : MonoBehaviour
     [Header("Spawn Points")]
     [SerializeField] private float _rangeX;
     [SerializeField] private float _rangeY;
-    [SerializeField] private float _cameraX;
-    [SerializeField] private float _cameraY;
+    [SerializeField] private float _playerX;
+    [SerializeField] private float _playerY;
 
     [Header("Variables")]
     [SerializeField] private float _spawnInterval;
@@ -37,20 +37,20 @@ public class SpawnScript : MonoBehaviour
 
     private void FindNewPosition()
     {
-        _rangeX = Mathf.Floor(mainCamera.orthographicSize * mainCamera.aspect) - 3;
-        _cameraX = mainCamera.transform.position.x;
-        _rangeY = Mathf.Floor(mainCamera.orthographicSize) - 3;
-        _cameraY = mainCamera.transform.position.y;
+        _rangeX = Mathf.Floor(mainCamera.orthographicSize * mainCamera.aspect);
+        _playerX = mainCamera.transform.position.x;
+        _rangeY = Mathf.Floor(mainCamera.orthographicSize);
+        _playerY = mainCamera.transform.position.y;
     }
 
 
     private IEnumerator spawnEnemy(float interval, GameObject enemy)
     {
-        FindNewPosition();
         yield return new WaitForSeconds(interval);
+        FindNewPosition();
         if (/* SpawnCount < _spawnMax && */ _player.activeInHierarchy)
         {
-            GameObject newEnemy = Instantiate(enemy, new Vector3(Random.Range((_cameraX -_rangeX), (_cameraX + _rangeX)), Random.Range((_cameraY -_rangeY), (_cameraY + _rangeY)), 0), Quaternion.identity);
+            GameObject newEnemy = Instantiate(enemy, new Vector3(Random.Range((_playerX -_rangeX), (_playerX + _rangeX)), Random.Range((_playerY -_rangeY), (_playerY + _rangeY)), 0), Quaternion.identity);
             StartCoroutine(spawnEnemy(interval, enemy));
             IncreaseSpawnCount();
         }
