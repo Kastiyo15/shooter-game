@@ -9,17 +9,19 @@ public class ShootScript : MonoBehaviour
     [SerializeField] private int _bulletSpeed;
 
     [Header("References")]
-    [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] public GameObject _bulletPrefab;
     [SerializeField] private Transform _firePoint;
-    private bool _player;
-    private bool _enemy;
+    [SerializeField] private GameObject _player;
+    private bool _playerBool;
+    private bool _enemyBool;
 
 
     void Start()
     {
         _timeBetweenShots = _fireRate;
-        _player = CompareTag("Player");
-        _enemy = CompareTag("Enemy");
+        _playerBool = CompareTag("Player");
+        _enemyBool = CompareTag("Enemy");
+        _player = GameManager.FindObjectOfType<GameManager>().Player01;
     }
 
 
@@ -29,13 +31,13 @@ public class ShootScript : MonoBehaviour
         if ((_timeBetweenShots <= 0))
         {
             // Run Player Shoot function
-            if (_player && Input.GetMouseButton(0))
+            if (_playerBool && Input.GetMouseButton(0))
             {
                 Shoot();
             }
 
             // Run Enemy shoot function
-            if (_enemy)
+            if (_enemyBool && _player.activeInHierarchy)
             {
                 Shoot();
             }
@@ -53,16 +55,25 @@ public class ShootScript : MonoBehaviour
         // Old Shoot Script
         if (CompareTag("Enemy"))
         {
-            GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
+            /*             GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
+
+                        // Projectile Velocity
+                        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                        rb.AddForce(_firePoint.up * _bulletSpeed, ForceMode2D.Impulse); */
+
+            GameObject obj = ObjectPool.SharedInstance.GetPooledObject();
+            if (obj == null) return;
+            obj.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
+            obj.SetActive(true);
 
             // Projectile Velocity
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
             rb.AddForce(_firePoint.up * _bulletSpeed, ForceMode2D.Impulse);
         }
 
         if (CompareTag("Player"))
         {
-            GameObject obj = ObjectPool.current.GetPooledObject();
+            GameObject obj = ObjectPool.SharedInstance.GetPooledObject();
             if (obj == null) return;
             obj.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
             obj.SetActive(true);

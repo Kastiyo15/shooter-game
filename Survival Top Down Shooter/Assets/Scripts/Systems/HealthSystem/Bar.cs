@@ -58,6 +58,7 @@ public class Bar : MonoBehaviour
 
     private void SetInitialValues()
     {
+        // Health Bar Initial Values
         if (CompareTag("HealthBar"))
         {
             // Set the initial text of the hpindicator
@@ -67,6 +68,7 @@ public class Bar : MonoBehaviour
             MaxValue = _health.MaxHp;
             Value = MaxValue;
         }
+        // Score Bar Initial Values
         else if (CompareTag("ScoreBar"))
         {
             mult = ScoreManager.Instance.ScoreMultiplier;
@@ -74,7 +76,7 @@ public class Bar : MonoBehaviour
             _scoreMult.SetText($"x{mult}");
 
             // Set Values to Score
-            MaxValue = _score.ScorePerKill * (20 * mult);
+            MaxValue = _score.ScorePerKill * (50 * mult);
             Value = 0;
             Change(Value);
         }
@@ -106,7 +108,7 @@ public class Bar : MonoBehaviour
             }
             slowChangeBar.SetWidth(TargetWidth);
         }
-        else if (suddenChangeBar.rect.width == TargetWidth)
+        else if (suddenChangeBar.rect.width == TargetWidth && mult < 4)
         {
             ScoreManager.Instance.IncreaseScoreMultiplier();
             SetInitialValues();

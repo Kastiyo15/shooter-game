@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc86c2c2119a9941a24d2d4012ad9d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialYVelocity: 1.75
-  InitialXVelocityRange: 4
-  LifeTime: 0.4
+  InitialYVelocity: 0.6
+  InitialXVelocityRange: 0.66
+  LifeTime: 0.2
 --- !u!50 &2369986810401412200
 Rigidbody2D:
   serializedVersion: 4
@@ -231,7 +231,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5168503117155457887}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -240,8 +240,8 @@ RectTransform:
   m_Father: {fileID: 5168503116019310783}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}

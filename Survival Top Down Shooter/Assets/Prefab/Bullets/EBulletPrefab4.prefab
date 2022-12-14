@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 939852520499113781}
   - component: {fileID: 1967637739935771885}
   - component: {fileID: 138312584933034468}
-  m_Layer: 0
-  m_Name: EBulletPrefab1
+  m_Layer: 8
+  m_Name: EBulletPrefab4
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.7843138, g: 0.28627452, b: 0.42352945, a: 0.34117648}
+  m_Color: {r: 0.019607844, g: 0.37254903, b: 0.14901961, a: 0.34117648}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185523edfcae6d74f9ce60a5e1919a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 25
-  _effectPrefab: {fileID: 7722546575592812874, guid: 6caa56421b43b03459d6ec36cf449af7, type: 3}
+  _damage: 100
+  _effectPrefab: {fileID: 7722546575592812874, guid: 697b2dbfe511af848ac3760f0c720c86, type: 3}
   _rb: {fileID: 939852520499113781}
 --- !u!1 &7300839624908189955
 GameObject:
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
-  m_Color: {r: 0.76470596, g: 0.29803923, b: 0.41960788, a: 0.5882353}
+  m_Color: {r: 0.019607844, g: 0.38431376, b: 0.15294118, a: 0.5882353}
   m_Intensity: 6
   m_LightVolumeIntensity: 0.2
   m_LightVolumeIntensityEnabled: 1

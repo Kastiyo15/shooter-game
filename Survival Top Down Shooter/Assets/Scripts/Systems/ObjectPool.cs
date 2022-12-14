@@ -5,33 +5,34 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public static ObjectPool current;
-    public GameObject PooledObject;
-    public int PooledAmount;
-    public bool willGrow;
+    public static ObjectPool SharedInstance;
+    public List<GameObject> PooledObjects;
+    public GameObject ObjectToPool;
+    public int AmountToPool;
 
-    private List<GameObject> _pooledObjects;
+    public bool willGrow;
 
 
     private void Awake()
     {
         // An instance of the object pooler
-        current = this;
+        SharedInstance = this;
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        _pooledObjects = new List<GameObject>();
+        PooledObjects = new List<GameObject>();
+        GameObject tmp;
 
         // For loop,instantiate objects in the pooled amount, but keep a reference of them
-        for (int i = 0; i < PooledAmount; i++)
+        for (int i = 0; i < AmountToPool; i++)
         {
             // Create gameobjects, but set them inactive, add them to the list
-            GameObject obj = Instantiate(PooledObject);
-            obj.SetActive(false);
-            _pooledObjects.Add(obj);
+            tmp = Instantiate(ObjectToPool);
+            tmp.SetActive(false);
+            PooledObjects.Add(tmp);
         }
     }
 
@@ -39,19 +40,19 @@ public class ObjectPool : MonoBehaviour
     public GameObject GetPooledObject()
     {
         // find an inactive object and return in, by looping through list
-        for (int i = 0; i < _pooledObjects.Count; i++)
+        for (int i = 0; i < AmountToPool; i++)
         {
-            if (!_pooledObjects[i].activeInHierarchy)
+            if (!PooledObjects[i].activeInHierarchy)
             {
-                return _pooledObjects[i];
+                return PooledObjects[i];
             }
         }
 
         // Check if list will be dynamic
         if (willGrow)
         {
-            GameObject obj = Instantiate(PooledObject);
-            _pooledObjects.Add(obj);
+            GameObject obj = Instantiate(ObjectToPool);
+            PooledObjects.Add(obj);
             return obj;
         }
         return null;

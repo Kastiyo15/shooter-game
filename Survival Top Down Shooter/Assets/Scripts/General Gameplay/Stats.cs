@@ -6,6 +6,8 @@ public class Stats : MonoBehaviour
     [Header("References")]
     [SerializeField] private CameraShake _cameraShake;
     [SerializeField] private Enemy _enemyScore;
+    [SerializeField] private GameObject _effectPrefab; // For Death animation
+
 
     // Used to calculate SPK * Enemy value
     private int _killValue;
@@ -35,6 +37,7 @@ public class Stats : MonoBehaviour
         _cameraShake._start = true;
         if (CompareTag("Enemy"))
         {
+            GameObject deathEffect = Instantiate(_effectPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
             ScoreManager.Instance.IncreaseScore(_killValue);
             ScoreManager.Instance.KillScore(_killValue);

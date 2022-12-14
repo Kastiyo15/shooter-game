@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField]
-    private int _damage = 100;
+    public int DmgValue;
 
     [Header("References")]
     [SerializeField]
@@ -16,7 +16,12 @@ public class Projectile : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("Disable", 2f);
+        if (CompareTag("Player"))
+        {
+            Invoke("Disable", 2f);
+        }
+
+        Invoke("DestroyBullet", 3f);
     }
 
 
@@ -27,7 +32,7 @@ public class Projectile : MonoBehaviour
         {
             if (hitInfo.tag != tag)
             {
-                health.Damage(_damage);
+                health.Damage(DmgValue);
             }
         }
 
@@ -35,15 +40,25 @@ public class Projectile : MonoBehaviour
     }
 
 
-    void CreateHitEffect()
+    public void CreateHitEffect()
     {
+        GameObject hitEffect = Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+
+        // Destroy if its an enemy bullet
         if (CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            DestroyBullet();
         }
-        GameObject hitEffect = Instantiate(_effectPrefab, transform.position, Quaternion.identity);
-        Disable();
-        //Destroy(hitEffect, 1f);
+        else
+        {
+            Disable();
+        }
+    }
+
+
+    private void DestroyBullet()
+    {
+        Destroy(gameObject);
     }
 
 
@@ -55,6 +70,6 @@ public class Projectile : MonoBehaviour
 
     private void OnDisable()
     {
-        CancelInvoke();   
+        CancelInvoke();
     }
 }

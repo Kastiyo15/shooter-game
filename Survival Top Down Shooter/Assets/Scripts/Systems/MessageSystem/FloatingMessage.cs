@@ -12,9 +12,9 @@ namespace Scripts.Systems.MessageSystem
         private Rigidbody2D _rigidbody;
         private TMP_Text _value;
 
-        public float InitialYVelocity = 7f;
-        public float InitialXVelocityRange = 3f;
-        public float LifeTime = 0.8f;
+        [SerializeField] private float InitialYVelocity;
+        [SerializeField] private float InitialXVelocityRange;
+        [SerializeField] private float LifeTime;
 
 
         private void Awake()
@@ -26,8 +26,15 @@ namespace Scripts.Systems.MessageSystem
 
         private void Start()
         {
-            _rigidbody.velocity =
-                new Vector2(Random.Range(-InitialXVelocityRange, InitialXVelocityRange), InitialYVelocity);
+            if (InitialXVelocityRange < 1f)
+            {
+                _rigidbody.velocity = new Vector2(InitialXVelocityRange, InitialYVelocity);
+            }
+            else
+            {
+                _rigidbody.velocity = new Vector2(Random.Range(-InitialXVelocityRange, InitialXVelocityRange), InitialYVelocity);
+            }
+
             Destroy(gameObject, LifeTime);
         }
 

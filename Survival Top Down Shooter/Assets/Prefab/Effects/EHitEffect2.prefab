@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7722546575592812872}
   - component: {fileID: 7722546575592812873}
   m_Layer: 0
-  m_Name: EHitEffect3
-  m_TagString: Player
+  m_Name: EHitEffect2
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,8 +222,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.50980395, g: 0.33333334, b: 0.098039225, a: 1}
-      maxColor: {r: 0.8117648, g: 0.5529412, b: 0.19215688, a: 1}
+      minColor: {r: 0.24705884, g: 0.098039225, b: 0.41176474, a: 1}
+      maxColor: {r: 0.4431373, g: 0.21960786, b: 0.68235296, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

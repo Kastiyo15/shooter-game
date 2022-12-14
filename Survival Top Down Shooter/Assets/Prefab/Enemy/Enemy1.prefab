@@ -300,6 +300,7 @@ MonoBehaviour:
   _rotationSpeed: 1.75
   Timer: 0
   _rb: {fileID: 8761807065153987534}
+  _effectPrefab: {fileID: 7526300079010626651, guid: 2cc2bae92169c9648801def95da9098f, type: 3}
 --- !u!114 &867739104533242432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,9 +314,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireRate: 1
-  _bulletSpeed: 20
+  _bulletSpeed: 30
   _bulletPrefab: {fileID: 5279461290671761552, guid: 63f17a300d685f3469bb90020070b4f0, type: 3}
   _firePoint: {fileID: 1066533116985021516}
+  _player: {fileID: 0}
 --- !u!114 &-3357626081319709645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraShake: {fileID: 0}
   _enemyScore: {fileID: 5640387719452913632}
+  _effectPrefab: {fileID: 7526300079010626651, guid: 2cc2bae92169c9648801def95da9098f, type: 3}
 --- !u!114 &-1869020754760620797
 MonoBehaviour:
   m_ObjectHideFlags: 0
