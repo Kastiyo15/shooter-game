@@ -61,7 +61,7 @@ public class ShootScript : MonoBehaviour
                         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
                         rb.AddForce(_firePoint.up * _bulletSpeed, ForceMode2D.Impulse); */
 
-            GameObject obj = ObjectPool.SharedInstance.GetPooledObject();
+            GameObject obj = ObjectPool.SharedInstance.GetEnemyBulletFromPool();
             if (obj == null) return;
             obj.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
             obj.SetActive(true);
@@ -73,7 +73,7 @@ public class ShootScript : MonoBehaviour
 
         if (CompareTag("Player"))
         {
-            GameObject obj = ObjectPool.SharedInstance.GetPooledObject();
+            GameObject obj = ObjectPool.SharedInstance.GetPlayerBulletFromPool();
             if (obj == null) return;
             obj.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
             obj.SetActive(true);

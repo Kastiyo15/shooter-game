@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitialYVelocity: 0.6
   InitialXVelocityRange: 0.66
-  LifeTime: 0.2
+  LifeTime: 0.3
 --- !u!50 &2369986810401412200
 Rigidbody2D:
   serializedVersion: 4

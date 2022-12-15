@@ -1243,7 +1243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61fd6a0695510249ad896108b200fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _followSpeed: 0.5
+  _followSpeed: 0.6
   _target: {fileID: 1249662928}
   _radius: 2
 --- !u!114 &519420036
@@ -2985,7 +2985,7 @@ MonoBehaviour:
   _rangeY: 0
   _playerX: 0
   _playerY: 0
-  _spawnInterval: 1
+  _spawnInterval: 0.09
   _spawnMax: 10
   SpawnCount: 0
   _player: {fileID: 1249662918}
@@ -3510,7 +3510,7 @@ GameObject:
   - component: {fileID: 2044738828}
   - component: {fileID: 2044738829}
   m_Layer: 0
-  m_Name: PlayerBulletPool
+  m_Name: ObjectPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3543,10 +3543,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97dbad723d2156d48b6cebc8318e11ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PooledObjects: []
-  ObjectToPool: {fileID: 5279461290671761552, guid: bb3de917306406d43a773bb2596d3aa4, type: 3}
-  AmountToPool: 15
-  willGrow: 0
+  _playerBullet: {fileID: 5279461290671761552, guid: bb3de917306406d43a773bb2596d3aa4, type: 3}
+  _playerBulletPoolSize: 50
+  _enemyBullet: {fileID: 5279461290671761552, guid: 63f17a300d685f3469bb90020070b4f0, type: 3}
+  _enemyBulletPoolSize: 50
+  _playerBulletFX: {fileID: 7722546575592812874, guid: 98b864715b6d5ef49bd88ad986cd1093, type: 3}
+  _playerBulletFXPoolSize: 10
+  _enemyBulletFX: {fileID: 7722546575592812874, guid: 6caa56421b43b03459d6ec36cf449af7, type: 3}
+  _enemyBulletFXPoolSize: 10
+  willGrow: 1
 --- !u!1 &2089496659
 GameObject:
   m_ObjectHideFlags: 0
@@ -4061,9 +4066,45 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5928458573332021814, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
-      propertyPath: m_Constraints
+    - target: {fileID: 4894527486975145928, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: _radius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458573332021812, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: m_FlipX
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458573332021812, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: m_Size.x
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458573332021812, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: m_Size.y
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458573332021812, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43c346bb07414d843bf09dfd256f3d6e, type: 3}
+    - target: {fileID: 5928458573332021812, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: m_Color.b
+      value: 0.990566
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458573332021812, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: m_Color.g
+      value: 0.990566
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458573332021812, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: m_Color.r
+      value: 0.990566
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458573332021812, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458573332021817, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499121, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_RootOrder
@@ -4111,7 +4152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499124, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: _fireRate
-      value: 0.1
+      value: 0.005
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499128, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_Name
@@ -4120,14 +4161,6 @@ PrefabInstance:
     - target: {fileID: 5928458574748499128, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928458574748499129, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
-      propertyPath: _hp
-      value: 3000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928458574748499129, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
-      propertyPath: _maxHp
-      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499129, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: Healed.m_PersistentCalls.m_Calls.Array.data[0].m_Target

@@ -4,24 +4,15 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField]
-    public int DmgValue;
+    [SerializeField] public int DmgValue;
 
-    [Header("References")]
-    [SerializeField]
-    private GameObject _effectPrefab;
-    [SerializeField]
-    private Rigidbody2D _rb;
+    private GameObject _projectile;
+    private GameObject _projectileFX;
 
 
     private void OnEnable()
     {
-        if (CompareTag("Player"))
-        {
-            Invoke("Disable", 2f);
-        }
-
-        Invoke("DestroyBullet", 3f);
+        Invoke("Disable", 3f);
     }
 
 
@@ -42,23 +33,24 @@ public class Projectile : MonoBehaviour
 
     public void CreateHitEffect()
     {
-        GameObject hitEffect = Instantiate(_effectPrefab, transform.position, Quaternion.identity);
-
-        // Destroy if its an enemy bullet
-        if (CompareTag("Enemy"))
+        if (CompareTag("Player"))
         {
-            DestroyBullet();
+            //GameObject hitEffect = Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+
+            _projectileFX = ObjectPool.SharedInstance.GetPlayerBulletFXFromPool();
+            if (_projectileFX == null) return;
+            _projectileFX.transform.position = transform.position;
+            _projectileFX.SetActive(true);
         }
-        else
+        else if (CompareTag("Enemy"))
         {
-            Disable();
+            _projectileFX = ObjectPool.SharedInstance.GetEnemyBulletFXFromPool();
+            if (_projectileFX == null) return;
+            _projectileFX.transform.position = transform.position;
+            _projectileFX.SetActive(true);
         }
-    }
 
-
-    private void DestroyBullet()
-    {
-        Destroy(gameObject);
+        Disable();
     }
 
 

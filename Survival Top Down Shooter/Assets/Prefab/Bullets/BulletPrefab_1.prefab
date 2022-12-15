@@ -138,8 +138,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DmgValue: 100
-  _effectPrefab: {fileID: 7722546575592812874, guid: 98b864715b6d5ef49bd88ad986cd1093, type: 3}
-  _rb: {fileID: 939852520499113781}
 --- !u!1 &7100386530220985972
 GameObject:
   m_ObjectHideFlags: 0
