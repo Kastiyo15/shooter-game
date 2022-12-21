@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject Player01;
     [SerializeField] private GameObject _spawnerParent;
+    [SerializeField] private PauseMenu _deathScreen;
+
+    public int KillCounter = 0;
 
 
     private void Awake()
@@ -21,7 +25,15 @@ public class GameManager : MonoBehaviour
         if (!Player01.activeInHierarchy)
         {
             _spawnerParent.SetActive(false);
+            StartCoroutine(StartDeathMenu());
         }
+    }
+
+
+    private IEnumerator StartDeathMenu()
+    {
+        yield return new WaitForSeconds(2f);
+        _deathScreen.GetComponent<PauseMenu>().DeathMenu();
     }
 }
 

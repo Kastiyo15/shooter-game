@@ -23,6 +23,7 @@ namespace Scripts.Systems.MessageSystem
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _value = GetComponentInChildren<TMP_Text>();
+            //this.GetComponentInChildren<Canvas>().worldCamera = Camera.main;
         }
 
         private void Start()

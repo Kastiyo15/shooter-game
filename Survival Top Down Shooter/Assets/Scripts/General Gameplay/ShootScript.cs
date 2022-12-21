@@ -39,7 +39,11 @@ public class ShootScript : MonoBehaviour
             // Run Enemy shoot function
             if (_enemyBool && _player.activeInHierarchy)
             {
-                Shoot();
+                Enemy me = this.gameObject.GetComponent<Enemy>();
+                if (me.finalDistance < (me.maximumDistance - 15))
+                {
+                    Shoot();
+                }
             }
         }
         else

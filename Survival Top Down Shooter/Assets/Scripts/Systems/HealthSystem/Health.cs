@@ -37,6 +37,11 @@ public class Health : MonoBehaviour
             if (_hp <= 0)
             {
                 Died?.Invoke();
+
+                if(CompareTag("Enemy"))
+                {
+                    KillCounter.FindObjectOfType<KillCounter>().UpdateKillCounter();
+                }
             }
         }
     }

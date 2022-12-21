@@ -7,17 +7,17 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
+    private bool _dead = false;
 
-    [SerializeField]
-    private GameObject pauseMenuUI;
+    [SerializeField] private GameObject _pauseMenuUI;
+    [SerializeField] private GameObject _deathMenuUI;
 
-    [SerializeField]
-    private string _mainMenu;
+    [SerializeField] private string _mainMenu;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !_dead)
         {
             if (GameIsPaused)
             {
@@ -34,7 +34,9 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         // Game Properties
-        pauseMenuUI.SetActive(false);
+        _pauseMenuUI.SetActive(false);
+        _deathMenuUI.SetActive(false);
+
         Time.timeScale = 1f;
         GameIsPaused = false;
 
@@ -47,7 +49,8 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         // Game Properties
-        pauseMenuUI.SetActive(true);
+        _pauseMenuUI.SetActive(true);
+
         Time.timeScale = 0f;
         GameIsPaused = true;
 
@@ -57,9 +60,30 @@ public class PauseMenu : MonoBehaviour
     }
 
 
+    public void DeathMenu()
+    {
+        // Game Properties
+        _deathMenuUI.SetActive(true);
+        _dead = true;
+
+        Time.timeScale = 0f;
+        GameIsPaused = true;
+
+        // Cursor Properties
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+
+    public void Restart()
+    {
+        Debug.Log("Restarting...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+
     public void LoadMenu()
     {
-        Time.timeScale = 1f;
         Debug.Log("Loading Menu...");
         SceneManager.LoadScene(_mainMenu);
     }

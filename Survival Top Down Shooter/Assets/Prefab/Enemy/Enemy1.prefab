@@ -301,6 +301,8 @@ MonoBehaviour:
   Timer: 0
   _rb: {fileID: 8761807065153987534}
   _effectPrefab: {fileID: 7526300079010626651, guid: 2cc2bae92169c9648801def95da9098f, type: 3}
+  finalDistance: 0
+  maximumDistance: 40
 --- !u!114 &867739104533242432
 MonoBehaviour:
   m_ObjectHideFlags: 0

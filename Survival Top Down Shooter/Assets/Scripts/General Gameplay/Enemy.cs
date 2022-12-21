@@ -21,9 +21,11 @@ public class Enemy : MonoBehaviour
     private Transform _playerPos; // Get player transform component
     private GameObject _player;
 
+    public float finalDistance;
+    public float maximumDistance = 35f;
+
     private ShootScript _getShootScript;
     private Projectile _damage;
-
 
 
     // Called before Start
@@ -51,6 +53,9 @@ public class Enemy : MonoBehaviour
 
         // Move Enemy using Coroutine
         StartCoroutine(moveEnemy(pauseDuration));
+
+        // Calculate Distance Coroutine
+        StartCoroutine(checkDistance());
     }
 
 
@@ -112,6 +117,23 @@ public class Enemy : MonoBehaviour
     }
 
 
+    // Every second run function to check distance to player
+    private IEnumerator checkDistance()
+    {
+        while (true)
+        {
+            // Wait a second then run the function
+            yield return new WaitForSeconds(1f);
+            CalculateDistance();
+
+            if (finalDistance > maximumDistance)
+            {
+                StartCoroutine(DestroyEnemy());
+            }
+        }
+    }
+
+
     void HomingMovement()
     {
         var dir = _playerPos.position - transform.position;
@@ -133,6 +155,23 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
+
+    private void CalculateDistance()
+    {
+        Vector2 Pos1 = this.transform.position; // My position
+        Vector2 Pos2 = _playerPos.transform.position; // Player position
+
+        float x1 = Pos1.x, x2 = Pos2.x, y1 = Pos1.y, y2 = Pos2.y; // Get x and y values
+
+        // Distance between x coordinates
+        float xDif = Mathf.Abs((Mathf.Max(x1, x2) - Mathf.Min(x1, x2)));
+        float yDif = Mathf.Abs((Mathf.Max(y1, y2) - Mathf.Min(y1, y2)));
+
+        // Pythagoras theorem
+        finalDistance = Mathf.Sqrt((xDif * xDif) + (yDif * yDif));
+    }
+
 
 
     private void DeathAnimation()

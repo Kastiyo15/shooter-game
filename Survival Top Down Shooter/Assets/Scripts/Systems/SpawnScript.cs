@@ -22,6 +22,7 @@ public class SpawnScript : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private KillCounter _killCount;
 
 
     // Start is called before the first frame update
@@ -47,12 +48,14 @@ public class SpawnScript : MonoBehaviour
     private IEnumerator spawnEnemy(float interval, GameObject enemy)
     {
         yield return new WaitForSeconds(interval);
+
         FindNewPosition();
+
         if (/* SpawnCount < _spawnMax && */ _player.activeInHierarchy)
         {
-            GameObject newEnemy = Instantiate(enemy, new Vector3(Random.Range((_playerX -_rangeX), (_playerX + _rangeX)), Random.Range((_playerY -_rangeY), (_playerY + _rangeY)), 0), Quaternion.identity);
-            StartCoroutine(spawnEnemy(interval, enemy));
+            GameObject newEnemy = Instantiate(enemy, new Vector3(Random.Range((_playerX - _rangeX), (_playerX + _rangeX)), Random.Range((_playerY - _rangeY), (_playerY + _rangeY)), 0), Quaternion.identity);
             IncreaseSpawnCount();
+            StartCoroutine(spawnEnemy(interval, enemy));
         }
     }
 
@@ -60,11 +63,5 @@ public class SpawnScript : MonoBehaviour
     private void IncreaseSpawnCount()
     {
         SpawnCount++;
-    }
-
-
-    public void DecreaseSpawnCount()
-    {
-        SpawnCount--;
     }
 }

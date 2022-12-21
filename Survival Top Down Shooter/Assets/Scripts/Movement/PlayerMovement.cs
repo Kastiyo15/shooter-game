@@ -18,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _cam = Camera.main;
+
+        PauseMenu.GameIsPaused = false;
+        Time.timeScale = 1f;
     }
 
 

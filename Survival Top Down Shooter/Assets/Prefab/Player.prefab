@@ -186,15 +186,15 @@ SpriteRenderer:
   m_SortingLayerID: -523350623
   m_SortingLayer: 3
   m_SortingOrder: 128
-  m_Sprite: {fileID: -2413806693520163455, guid: 43c346bb07414d843bf09dfd256f3d6e, type: 3}
-  m_Color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 43c346bb07414d843bf09dfd256f3d6e, type: 3}
+  m_Color: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &5928458573332021814
@@ -233,7 +233,7 @@ MonoBehaviour:
   _cam: {fileID: 0}
   _player: {fileID: 5928458574748499128}
   _speed: 100
-  _radius: 12
+  _radius: 6
 --- !u!1 &5928458574577325653
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +385,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.03
 --- !u!50 &5928458574748499122
 Rigidbody2D:
   serializedVersion: 4
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b11d70c8b1a63469054ff318d72cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fireRate: 0.05
+  _fireRate: 0.01
   _bulletSpeed: 25
   _bulletPrefab: {fileID: 5279461290671761552, guid: bb3de917306406d43a773bb2596d3aa4, type: 3}
   _firePoint: {fileID: 5928458574577325650}
@@ -466,8 +466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27cdf97983b02e4d8e76680baeba8c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 30000
-  _hp: 30000
+  _maxHp: 3000
+  _hp: 3000
   Healed:
     m_PersistentCalls:
       m_Calls:
