@@ -22,7 +22,6 @@ public class SpawnScript : MonoBehaviour
     [SerializeField] private GameObject _player;
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private KillCounter _killCount;
 
 
     // Start is called before the first frame update

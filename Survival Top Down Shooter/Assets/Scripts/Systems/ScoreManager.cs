@@ -14,11 +14,14 @@ public class ScoreManager : MonoBehaviour
     public int ScorePerSecond = 1;
     public float SPSTimer = 1;
     public int ScoreMultiplier = 1;
+    public int TotalAliveScore = 0;
+    public int TotalKillScore = 0;
 
 
     [Header("Floating Text Pos")]
     [SerializeField] private float _yPosition;
     [SerializeField] private float _xPosition;
+
 
     // Score References
     [Header("Score References")]
@@ -27,10 +30,12 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private GameObject _messagePrefab; // Score text after each kill
     private Bar _scoreBar;
 
+
     // Player references
     [Header("Player References")]
     [SerializeField] private GameObject _player;
     private GameManager _playerController;
+
 
     // Alive Score Coroutine
     private IEnumerator coroutine;
@@ -60,6 +65,8 @@ public class ScoreManager : MonoBehaviour
         Score += calcValue;
 
         UpdateScoreDisplay();
+
+        AddToTotals(calcValue);
 
         FloatingScoreText(calcValue);
     }
@@ -111,6 +118,20 @@ public class ScoreManager : MonoBehaviour
     public void KillScore(int amount)
     {
         _scoreBar.Change(amount);
+    }
+
+
+    public void AddToTotals(int amount)
+    {
+        // Add score per second to total
+        if ((amount / ScoreMultiplier) == ScorePerSecond)
+        {
+            TotalAliveScore += amount;
+        }
+        else
+        {
+            TotalKillScore += amount;
+        }
     }
 
 

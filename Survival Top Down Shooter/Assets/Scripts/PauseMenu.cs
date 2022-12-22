@@ -7,12 +7,13 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
-    private bool _dead = false;
+    public static bool _dead = false;
 
     [SerializeField] private GameObject _pauseMenuUI;
     [SerializeField] private GameObject _deathMenuUI;
 
     [SerializeField] private string _mainMenu;
+
 
     // Update is called once per frame
     void Update()
@@ -39,6 +40,7 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 1f;
         GameIsPaused = false;
+        _dead = false;
 
         // Cursor Properties
         Cursor.lockState = CursorLockMode.Confined;
@@ -66,7 +68,7 @@ public class PauseMenu : MonoBehaviour
         _deathMenuUI.SetActive(true);
         _dead = true;
 
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         GameIsPaused = true;
 
         // Cursor Properties
@@ -78,6 +80,7 @@ public class PauseMenu : MonoBehaviour
     public void Restart()
     {
         Debug.Log("Restarting...");
+        _dead = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
