@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 using System.Collections;
 
@@ -10,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject Player01;
     [SerializeField] private GameObject _spawnerParent;
     [SerializeField] private PauseMenu _deathScreen;
+    [SerializeField] private GameObject _UICamera;
 
     // Stopwatch
     private bool _timerActive = false;
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Player01.SetActive(true);
+        _UICamera.SetActive(true);
         CurrentTime = 0f;
         _timerActive = true;
         PauseMenu._dead = false;
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
         if (!Player01.activeInHierarchy)
         {
             _spawnerParent.SetActive(false);
+            _UICamera.SetActive(false);
             StartCoroutine(StartDeathMenu());
         }
 
@@ -60,7 +62,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator StartDeathMenu()
     {
         _timerActive = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         _deathScreen.GetComponent<PauseMenu>().DeathMenu();
     }
 }

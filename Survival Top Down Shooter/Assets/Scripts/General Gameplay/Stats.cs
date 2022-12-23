@@ -34,7 +34,11 @@ public class Stats : MonoBehaviour
     // Death function
     public void Die()
     {
-        _cameraShake._start = true;
+        if (CompareTag("Player"))
+        {
+            _cameraShake._start = true;
+        }
+        
         if (CompareTag("Enemy"))
         {
             GameObject deathEffect = Instantiate(_effectPrefab, transform.position, Quaternion.identity);

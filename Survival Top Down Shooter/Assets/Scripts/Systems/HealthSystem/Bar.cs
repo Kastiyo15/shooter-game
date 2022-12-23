@@ -62,7 +62,7 @@ public class Bar : MonoBehaviour
         if (CompareTag("HealthBar"))
         {
             // Set the initial text of the hpindicator
-            _hpIndicator.SetText($"{_health.Hp}/{_health.MaxHp}");
+            _hpIndicator.SetText($"{_health.Hp} / {_health.MaxHp}");
 
             // Set Values to Health
             MaxValue = _health.MaxHp;
@@ -129,7 +129,7 @@ public class Bar : MonoBehaviour
         if (CompareTag("HealthBar"))
         {
             // Set Health Text
-            _hpIndicator.SetText($"{Value}/{_health.MaxHp}");
+            _hpIndicator.SetText($"{Value} / {_health.MaxHp}");
         }
 
         if (CompareTag("ScoreBar"))

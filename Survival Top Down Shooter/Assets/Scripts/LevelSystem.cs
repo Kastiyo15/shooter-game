@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -25,6 +24,10 @@ public class LevelSystem : MonoBehaviour
     [SerializeField] private TMP_Text _txtNextLevel;
     [SerializeField] private TMP_Text _txtXpIndicator;
 
+    [Header("Animations")]
+    [SerializeField] private GameObject _levelUpEffect;
+    [SerializeField] private GameObject _continueEffect;
+
     [Header("Multipliers")]
     [SerializeField][Range(1000f, 10000f)] private float _additionMult;
     [SerializeField][Range(2f, 16f)] private float _powerMult;
@@ -37,15 +40,23 @@ public class LevelSystem : MonoBehaviour
 
     private void Start()
     {
+        // Set Base Stats
         _level = 1;
         _currentXp = 0;
         _talentPoint = 0;
 
+
+        // Make Animations inactive
+        _levelUpEffect.SetActive(false);
+        _continueEffect.SetActive(false);
+
+
         // Initiate Required Xp
         _requiredXp = CalculateRequiredXp();
 
-        StartCoroutine(SetStats());
 
+        // Start Coroutines
+        StartCoroutine(SetStats());
         StartCoroutine(LevelUp());
     }
 
@@ -103,11 +114,13 @@ public class LevelSystem : MonoBehaviour
         float tmp = Mathf.RoundToInt(_frontBarFill.fillAmount * _requiredXp);
         float percentage = ((tmp / _requiredXp) * 100.00f);
         _txtXpIndicator.SetText($"<b>EXP:</b>  {tmp} / {_requiredXp}  ({percentage:#0.00}%)");
-        
+
+
         // Store decimal fraction of xp
         float xpFraction = _currentXp / _requiredXp;
         // Store the fill amount of bar
         float FXP = _frontBarFill.fillAmount;
+
 
         // Make foreground bar lerp after background bar
         if (FXP < xpFraction)
@@ -115,17 +128,23 @@ public class LevelSystem : MonoBehaviour
             // Fill the Back bar
             _delayTimer += Time.deltaTime;
             _backBarFill.fillAmount = Mathf.Lerp(_backBarFill.fillAmount, xpFraction, (_delayTimer / (20 * _timeMult))); // The higher the multiplier the slower the lerp
-            
+
+
             // Then fill the front bar
             if (_delayTimer >= _timer)
             {
                 _lerpTimer += Time.deltaTime;
-                float percentComplete = _lerpTimer / (_timeMult * 0.8f); // The higher the multiplier the slower the lerp
+                float percentComplete = _lerpTimer / (_timeMult * 0.5f); // The higher the multiplier the slower the lerp
                 _frontBarFill.fillAmount = Mathf.Lerp(FXP, _backBarFill.fillAmount, percentComplete);
             }
         }
 
-        
+
+        // Check when bars have stopped moving
+        if (_lerpTimer > 3)
+        {
+            _continueEffect.SetActive(true);
+        }
     }
 
 
@@ -175,6 +194,9 @@ public class LevelSystem : MonoBehaviour
         _delayTimer = 0;
 
         yield return new WaitForSeconds(1f);
+
+        _levelUpEffect.SetActive(false);
+
         yield return new WaitUntil(() => _fullBar == true);
 
         // Experience system
@@ -191,6 +213,9 @@ public class LevelSystem : MonoBehaviour
 
         // Talent Points
         _talentPoint++;
+
+        // Animation
+        _levelUpEffect.SetActive(true);
 
 
         if (_currentXp >= _requiredXp)
@@ -214,8 +239,5 @@ public class LevelSystem : MonoBehaviour
 
         return solveForRequiredXp / 4;
     }
-
-
-
 }
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,8 +9,18 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] private GameObject _pauseMenuUI;
     [SerializeField] private GameObject _deathMenuUI;
+    [SerializeField] private GameObject _page2;
 
     [SerializeField] private string _mainMenu;
+
+
+    // Make menus inactive at start of game so i dont have to in the inspector
+    void Start()
+    {
+        _pauseMenuUI.SetActive(false);
+        _deathMenuUI.SetActive(false);
+        _page2.SetActive(false);
+    }
 
 
     // Update is called once per frame

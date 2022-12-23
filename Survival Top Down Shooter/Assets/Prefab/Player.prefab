@@ -233,7 +233,7 @@ MonoBehaviour:
   _cam: {fileID: 0}
   _player: {fileID: 5928458574748499128}
   _speed: 100
-  _radius: 6
+  _radius: 12
 --- !u!1 &5928458574577325653
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,8 +466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27cdf97983b02e4d8e76680baeba8c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 3000
-  _hp: 3000
+  _maxHp: 500
+  _hp: 500
   Healed:
     m_PersistentCalls:
       m_Calls:

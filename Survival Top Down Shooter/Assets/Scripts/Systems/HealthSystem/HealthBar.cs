@@ -37,7 +37,7 @@ public class HealthBar : MonoBehaviour
         //x = left, w = top, y = bottom, z = right
         _maxRightMask = _barRect.rect.width - _mask.padding.x - _mask.padding.z;
         // Set the initial text of the hpindicator
-        _hpIndicator.SetText($"{_health.Hp}/{_health.MaxHp}");
+        _hpIndicator.SetText($"{_health.Hp} / {_health.MaxHp}");
         // Set value of initial right mask
         _intitialRightMask = _mask.padding.z;
     }
