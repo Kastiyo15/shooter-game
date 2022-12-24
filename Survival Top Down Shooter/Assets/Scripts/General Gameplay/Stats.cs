@@ -10,7 +10,7 @@ public class Stats : MonoBehaviour
 
 
     // Used to calculate SPK * Enemy value
-    private int _killValue;
+    public int _killValue;
 
 
     // Run before anything else
@@ -38,13 +38,22 @@ public class Stats : MonoBehaviour
         {
             _cameraShake._start = true;
         }
-        
+
         if (CompareTag("Enemy"))
         {
             GameObject deathEffect = Instantiate(_effectPrefab, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+
+            // Increase Kill Count
+            KillCounter.FindObjectOfType<KillCounter>().UpdateKillCounter();
+
+            // Increase player score
             ScoreManager.Instance.IncreaseScore(_killValue);
+            ScoreManager.Instance.TotalKillScore += _killValue * ScoreManager.Instance.ScoreMultiplier;
+
+            // Increase Score bar
             ScoreManager.Instance.KillScore(_killValue);
+
+            Destroy(gameObject);
         }
     }
 }

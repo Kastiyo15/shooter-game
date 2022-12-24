@@ -4,7 +4,10 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] public int DmgValue;
+    public int DmgValue;
+
+    // Used to send data to GameManager
+    private GameManager _gameManager;
 
     private GameObject _projectile;
     private GameObject _projectileFX;
@@ -12,6 +15,15 @@ public class Projectile : MonoBehaviour
 
     private void OnEnable()
     {
+        // Check if they are players bullets
+        if (CompareTag("Player"))
+        {
+            // Add to bullets fired count
+            _gameManager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
+            _gameManager.BulletsFired++;
+        }
+
+        // Once enabled, disable after 3 seconds
         Invoke("Disable", 3f);
     }
 
@@ -21,9 +33,17 @@ public class Projectile : MonoBehaviour
         // Damage using the new Health Script
         if (hitInfo.gameObject.TryGetComponent<Health>(out var health))
         {
+            // If we hit something with a different tag, cause damage
             if (hitInfo.tag != tag)
             {
                 health.Damage(DmgValue);
+            }
+
+            // If bullets hits an enemy
+            if (hitInfo.tag == "Enemy")
+            {
+                // Add the damage to the players total damage value
+                _gameManager.TotalDamage += DmgValue;
             }
         }
 

@@ -6,10 +6,17 @@ using System.Collections;
 public class GameManager : MonoBehaviour
 {
 
-    public GameObject Player01;
+    [Header("References")]
     [SerializeField] private GameObject _spawnerParent;
     [SerializeField] private PauseMenu _deathScreen;
     [SerializeField] private GameObject _UICamera;
+    public GameObject Player01;
+
+
+    [Header("Stats For DeathScreen")]
+    [SerializeField] public int TotalDamage = 0;
+    [SerializeField] public int BulletsFired = 0;
+
 
     // Stopwatch
     private bool _timerActive = false;
@@ -61,9 +68,20 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator StartDeathMenu()
     {
+        if (_timerActive)
+        {
+            // Add damage and bullets to relative total scores and then the total score
+            ScoreManager.Instance.BulletsFiredScore = BulletsFired;
+            ScoreManager.Instance.TotalDamageScore = TotalDamage;
+            
+            // Add death score
+            ScoreManager.Instance.DeathScore();
+        }
         _timerActive = false;
         yield return new WaitForSeconds(1f);
         _deathScreen.GetComponent<PauseMenu>().DeathMenu();
+
+
     }
 }
 

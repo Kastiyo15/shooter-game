@@ -10,10 +10,13 @@ public class ScoreManager : MonoBehaviour
 
 
     public long Score { get; private set; }
-    public int ScorePerKill = 10; // base value, each enemy has its own score
-    public int ScorePerSecond = 1;
+    public int ScorePerKill = 5; // base value, each enemy has its own score
+    public int ScorePerSecond = 10;
     public float SPSTimer = 1;
     public int ScoreMultiplier = 1;
+
+    public int BulletsFiredScore = 0;
+    public int TotalDamageScore = 0;
     public int TotalAliveScore = 0;
     public int TotalKillScore = 0;
 
@@ -123,14 +126,10 @@ public class ScoreManager : MonoBehaviour
 
     public void AddToTotals(int amount)
     {
-        // Add score per second to total
+        // Work out Score Per Second Score
         if ((amount / ScoreMultiplier) == ScorePerSecond)
         {
             TotalAliveScore += amount;
-        }
-        else
-        {
-            TotalKillScore += amount;
         }
     }
 
@@ -150,5 +149,12 @@ public class ScoreManager : MonoBehaviour
                 IncreaseScore(sps);
             }
         }
+    }
+
+
+    // Add damage and bullet scores to Score
+    public void DeathScore()
+    {
+        Score += BulletsFiredScore + TotalDamageScore;
     }
 }
