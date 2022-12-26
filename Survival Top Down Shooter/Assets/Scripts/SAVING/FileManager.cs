@@ -14,6 +14,7 @@ public class FileManager : MonoBehaviour
         try
         {
             File.WriteAllText(fullPath, a_FileContents);
+            Debug.LogFormat($"Successfully Saved to {fullPath}.");
             return true;
         }
         catch (Exception e)

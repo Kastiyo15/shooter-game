@@ -27,7 +27,7 @@ public class LevelSystem : MonoBehaviour
     [SerializeField] private TMP_Text _txtXpIndicator;
 
     [Header("Animations")]
-    [SerializeField] private GameObject _levelUpEffect;
+    [SerializeField] private Animator _levelUpEffect;
     [SerializeField] private GameObject _continueEffect;
 
     [Header("Multipliers")]
@@ -39,6 +39,7 @@ public class LevelSystem : MonoBehaviour
 
     private bool _fullBar = false;
     private bool once = true;
+    private bool _leveledUp = false;
 
 
     private void Awake()
@@ -55,7 +56,8 @@ public class LevelSystem : MonoBehaviour
 
 
         // Make Animations inactive
-        _levelUpEffect.SetActive(false);
+        _levelUpEffect.SetTrigger("Normal");
+        _leveledUp = false;
         _continueEffect.SetActive(false);
 
 
@@ -121,7 +123,15 @@ public class LevelSystem : MonoBehaviour
         // Update text on bar with points relative to fill amount (genius!)
         float tmp = Mathf.RoundToInt(_frontBarFill.fillAmount * _requiredXp);
         float percentage = ((tmp / _requiredXp) * 100.00f);
-        _txtXpIndicator.SetText($"<b>EXP:</b>  {tmp} / {_requiredXp}  ({percentage:#0.00}%)");
+
+        if (!_leveledUp)
+        {
+            _txtXpIndicator.SetText($"<b>EXP:</b>  {tmp} / {_requiredXp}  ({percentage:#0.00}%)");
+        }
+        else if (_leveledUp)
+        {
+            _txtXpIndicator.SetText($"<b>L E V E L  U P !</b>");
+        }
 
 
         // Store decimal fraction of xp
@@ -149,9 +159,11 @@ public class LevelSystem : MonoBehaviour
 
 
         // Check when bars have stopped moving
-        if (_lerpTimer > 3 && once)
+        if (_lerpTimer > 2 && once)
         {
             _continueEffect.SetActive(true);
+            _levelUpEffect.SetTrigger("Normal");
+            _leveledUp = false;
             once = false;
         }
     }
@@ -204,9 +216,13 @@ public class LevelSystem : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        _levelUpEffect.SetActive(false);
+        _levelUpEffect.SetTrigger("Normal");
+        _leveledUp = false;
 
         yield return new WaitUntil(() => _fullBar == true);
+
+        _levelUpEffect.SetTrigger("LeveledUp");
+        _leveledUp = true;
 
         // Experience system
         _level++;
@@ -223,10 +239,6 @@ public class LevelSystem : MonoBehaviour
         // Talent Points
         _talentPoint++;
 
-        // Animation
-        _levelUpEffect.SetActive(true);
-
-
         if (_currentXp >= _requiredXp)
         {
             StartCoroutine(LevelUp());
@@ -237,6 +249,8 @@ public class LevelSystem : MonoBehaviour
     // Calcualte required xp for level up algorithm
     private int CalculateRequiredXp()
     {
+
+
         int solveForRequiredXp = 0;
 
         // Loop for everytime we have leveled up
