@@ -6,6 +6,8 @@ using TMPro;
 
 public class LevelSystem : MonoBehaviour
 {
+    public static LevelSystem Instance { get; private set; }
+
     [Header("Level Data")]
     [SerializeField] private int _level;
     [SerializeField] private float _currentXp;
@@ -36,14 +38,20 @@ public class LevelSystem : MonoBehaviour
 
 
     private bool _fullBar = false;
+    private bool once = true;
 
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
         // Set Base Stats
-        _level = 1;
-        _currentXp = 0;
-        _talentPoint = 0;
+        /*     _level = 1;
+            _currentXp = 0;
+            _talentPoint = 0; */
 
 
         // Make Animations inactive
@@ -141,9 +149,10 @@ public class LevelSystem : MonoBehaviour
 
 
         // Check when bars have stopped moving
-        if (_lerpTimer > 3)
+        if (_lerpTimer > 3 && once)
         {
             _continueEffect.SetActive(true);
+            once = false;
         }
     }
 
@@ -239,5 +248,35 @@ public class LevelSystem : MonoBehaviour
 
         return solveForRequiredXp / 4;
     }
+
+
+
+
+
+
+
+
+
+
+    ////////////////////////
+    // SAVING AND LOADING //
+    public void PopulateSaveData(SaveData a_SaveData)
+    {
+        a_SaveData.m_PlayerLevel = _level;
+        a_SaveData.m_PlayerCurrentXp = _currentXp;
+        a_SaveData.m_PlayerRequiredXp = _requiredXp;
+        a_SaveData.m_PlayerTalentPoint = _talentPoint;
+    }
+
+
+    public void LoadFromSaveData(SaveData a_SaveData)
+    {
+        _level = a_SaveData.m_PlayerLevel;
+        _currentXp = a_SaveData.m_PlayerCurrentXp;
+        _requiredXp = a_SaveData.m_PlayerRequiredXp;
+        _talentPoint = a_SaveData.m_PlayerTalentPoint;
+    }
+    // SAVING AND LOADING //
+    ////////////////////////
 }
 

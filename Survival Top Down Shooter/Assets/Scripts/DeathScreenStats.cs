@@ -19,12 +19,26 @@ public class DeathScreenStats : MonoBehaviour
     [SerializeField] private TMP_Text _enemiesKilledXP;
     [SerializeField] private TMP_Text _totalXP;
 
+
     [Header("References")]
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private float _timer;
     [SerializeField] private float _tmpTimer;
 
-    private TimeSpan _storedTime;
+
+    [Header("Stats")]
+    public float totalDamage; // total damage caused to enemies
+    public float bulletsFired; // number of bullets fired
+    public float killCount; // number of enemies killed
+    public TimeSpan _storedTime; // time alive
+
+
+    [Header("Scores")]
+    public float damageScore; // Score from dealing damage
+    public float bulletScore; // Score from shooting bullets
+    public float aliveScore; // Score from being alive
+    public float killScore; // Score from killing enemies
+    public float totalScore; // Total Score
 
 
     // Start is called before the first frame update
@@ -38,19 +52,20 @@ public class DeathScreenStats : MonoBehaviour
     {
         _timer += Time.deltaTime;
 
-        var killCount = Mathf.Lerp(0, KillCounter.FindObjectOfType<KillCounter>().KillCount, _timer / 2);
+        killCount = Mathf.Lerp(0, KillCounter.FindObjectOfType<KillCounter>().KillCount, _timer / 2);
 
         // Exp Text
         var sManager = ScoreManager.Instance;
 
-        var totalDamage = Mathf.Lerp(0, _gameManager.GetComponent<GameManager>().TotalDamage, _timer / 2);
-        var bulletsFired = Mathf.Lerp(0, _gameManager.GetComponent<GameManager>().BulletsFired, _timer / 2);
-        var damageScore = Mathf.Lerp(0, sManager.TotalDamageScore, _timer / 2);
-        var bulletScore = Mathf.Lerp(0, sManager.BulletsFiredScore, _timer / 2);
+        totalDamage = Mathf.Lerp(0, _gameManager.GetComponent<GameManager>().TotalDamage, _timer / 2);
+        bulletsFired = Mathf.Lerp(0, _gameManager.GetComponent<GameManager>().BulletsFired, _timer / 2);
 
-        var aliveScore = Mathf.Lerp(0, sManager.TotalAliveScore, _timer / 2);
-        var killScore = Mathf.Lerp(0, sManager.TotalKillScore, _timer / 2);
-        var totalScore = Mathf.Lerp(0, sManager.Score, _timer / 2);
+        damageScore = Mathf.Lerp(0, sManager.TotalDamageScore, _timer / 2);
+        bulletScore = Mathf.Lerp(0, sManager.BulletsFiredScore, _timer / 2);
+
+        aliveScore = Mathf.Lerp(0, sManager.TotalAliveScore, _timer / 2);
+        killScore = Mathf.Lerp(0, sManager.TotalKillScore, _timer / 2);
+        totalScore = Mathf.Lerp(0, sManager.Score, _timer / 2);
 
         TimerDisplay();
         UpdateUI(totalDamage, bulletsFired, damageScore, bulletScore, killCount, aliveScore, killScore, totalScore);

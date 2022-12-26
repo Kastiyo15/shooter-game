@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+using UnityEngine.UI;
 
 
 public class NextPage : MonoBehaviour
@@ -8,6 +10,7 @@ public class NextPage : MonoBehaviour
     [SerializeField] private CanvasGroup _currentPage;
     [SerializeField] private CanvasGroup _nextPage;
     [SerializeField] private Animator _animator;
+
 
     private bool _changePage;
 

@@ -1,9 +1,10 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, ISaveable
 {
 
     [Header("References")]
@@ -23,10 +24,15 @@ public class GameManager : MonoBehaviour
     public float CurrentTime;
     public TimeSpan Timer;
 
+    private bool once = true;
+
 
 
     private void Awake()
     {
+        // Load Scores
+        LoadJsonData(this);
+
         Player01.SetActive(true);
         _UICamera.SetActive(true);
         CurrentTime = 0f;
@@ -42,7 +48,13 @@ public class GameManager : MonoBehaviour
         {
             _spawnerParent.SetActive(false);
             _UICamera.SetActive(false);
-            StartCoroutine(StartDeathMenu());
+
+            if (once)
+            {
+                StopCoroutine(StartDeathMenu());
+                StartCoroutine(StartDeathMenu());
+                once = false;
+            }
         }
 
         // Start Stopwatch when game isn't paused and player isn't dead
@@ -73,15 +85,74 @@ public class GameManager : MonoBehaviour
             // Add damage and bullets to relative total scores and then the total score
             ScoreManager.Instance.BulletsFiredScore = BulletsFired;
             ScoreManager.Instance.TotalDamageScore = TotalDamage;
-            
+
             // Add death score
             ScoreManager.Instance.DeathScore();
         }
         _timerActive = false;
-        yield return new WaitForSeconds(1f);
-        _deathScreen.GetComponent<PauseMenu>().DeathMenu();
 
+        yield return new WaitForSeconds(1f);
+
+/*         // Save Game Data
+        SaveJsonData(this); */
+
+        _deathScreen.GetComponent<PauseMenu>().DeathMenu();
+    }
+
+
+
+    //////////////////////////////////////////////////////////////////
+    // SAVING AND LOADING //
+    public static void SaveJsonData(GameManager a_GameManager)
+    {
+        SaveData sd = new SaveData();
+        a_GameManager.PopulateSaveData(sd);
+
+        if (FileManager.WriteToFile("SaveData.dat", sd.ToJson()))
+        {
+            Debug.Log("Save Successful");
+        }
+    }
+
+
+    public void PopulateSaveData(SaveData a_SaveData)
+    {
+        // Save Career Stats
+        a_SaveData.m_CareerBullets = CareerStats.Instance.CareerBullets;
+        a_SaveData.m_CareerDamage = CareerStats.Instance.CareerDamage;
+        a_SaveData.m_CareerKills = CareerStats.Instance.CareerKills;
+
+        // Save Player Level Data
+        LevelSystem.Instance.PopulateSaveData(a_SaveData);
+    }
+
+
+
+    public static void LoadJsonData(GameManager a_GameManager)
+    {
+        if (FileManager.LoadFromFile("SaveData.dat", out var json))
+        {
+            SaveData sd = new SaveData();
+            sd.LoadFromJson(json);
+
+            a_GameManager.LoadFromSaveData(sd);
+            Debug.Log("Load Complete");
+        }
+    }
+
+
+
+    public void LoadFromSaveData(SaveData a_SaveData)
+    {
+        // Load Career Stats
+        CareerStats.Instance.CareerBullets = a_SaveData.m_CareerBullets;
+        CareerStats.Instance.CareerDamage = a_SaveData.m_CareerDamage;
+        CareerStats.Instance.CareerKills = a_SaveData.m_CareerKills;
+
+        // Load Player Level Data
+        LevelSystem.Instance.LoadFromSaveData(a_SaveData);
 
     }
+    //////////////////////////////////////////////////////////////////
 }
 

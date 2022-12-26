@@ -89,6 +89,7 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Restarting...");
         _dead = false;
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -100,6 +101,7 @@ public class PauseMenu : MonoBehaviour
     }
 
 
+    // Don't save data if quit before dying
     public void QuitGame()
     {
         Debug.Log("Quitting Game...");
