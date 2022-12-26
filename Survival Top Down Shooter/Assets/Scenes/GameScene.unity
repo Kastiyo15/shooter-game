@@ -3578,7 +3578,7 @@ RectTransform:
   m_GameObject: {fileID: 541698585}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.25, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.22, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 806397363}
@@ -4780,7 +4780,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 806397362}
   m_Enabled: 1
-  m_Alpha: 0.9
+  m_Alpha: 0.8
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5022,7 +5022,7 @@ RectTransform:
   m_GameObject: {fileID: 826678456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.25, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.22, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 806397363}
@@ -7485,7 +7485,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197210593}
   m_Enabled: 1
-  m_Alpha: 0.9
+  m_Alpha: 0.8
   m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -8953,6 +8953,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1399982858}
+  - component: {fileID: 1399982859}
   m_Layer: 5
   m_Name: Page2 - Stats
   m_TagString: Untagged
@@ -8985,6 +8986,18 @@ RectTransform:
   m_AnchoredPosition: {x: -260, y: 0}
   m_SizeDelta: {x: 875.9427, y: 704.9281}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1399982859
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399982857}
+  m_Enabled: 1
+  m_Alpha: 0.8
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1408658769
 GameObject:
   m_ObjectHideFlags: 0
