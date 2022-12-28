@@ -249,8 +249,6 @@ public class LevelSystem : MonoBehaviour
     // Calcualte required xp for level up algorithm
     private int CalculateRequiredXp()
     {
-
-
         int solveForRequiredXp = 0;
 
         // Loop for everytime we have leveled up

@@ -10,6 +10,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject _pauseMenuUI;
     [SerializeField] private GameObject _deathMenuUI;
     [SerializeField] private GameObject _page2;
+    [SerializeField] private GameObject _talentMenuUI;
+
 
     [SerializeField] private string _mainMenu;
 
@@ -20,6 +22,7 @@ public class PauseMenu : MonoBehaviour
         _pauseMenuUI.SetActive(false);
         _deathMenuUI.SetActive(false);
         _page2.SetActive(false);
+        _talentMenuUI.SetActive(false);
     }
 
 
