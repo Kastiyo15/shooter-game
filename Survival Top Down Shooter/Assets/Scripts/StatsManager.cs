@@ -19,12 +19,20 @@ public class StatsManager : MonoBehaviour, ISaveable
     public int PlayerDefence;
     public float MovementSpeed;
 
-    [Header("Bullet Stats")]
-    public int BulletClipSize;
-    public int BulletDamage;
-    public float BulletFireRate;
-    public float BulletRandomness;
-    public int BulletVelocity;
+    [Header("Bullet Stats")] // These are base values which will be calculated against a mulitplier to get true value
+    public int BulletClipSize = 10;
+    public int BulletDamage = 50;
+    public float BulletFireRate = 1.000f;
+    public float BulletRandomness = 0.1f;
+    public float BulletVelocity = 15f;  // Below are multipliers for respective skills
+    public int MultBulletClipSize = 2;
+    public int MultBulletDamage = 10;
+    public float MultBulletFireRate = 0.800f;
+    public float MultBulletRandomness = 0.01f;
+    public float MultBulletVelocity = 1.5f;
+    public List<float> DefaultBulletValues = new List<float>();
+    public List<float> BulletStatsList = new List<float>();
+    public List<float> BulletMultipliersList = new List<float>();
 
     // Take these from the score manager!
     [Header("Score Stats")]
@@ -64,10 +72,6 @@ public class StatsManager : MonoBehaviour, ISaveable
 
     private void Start()
     {
-        SetBulletStats();
-        SetLevelStats();
-
-
         // Loop through the upgrades parent to add points used in each skill to a list
         if (PointsSpentList.Count == 0)
         {
@@ -78,6 +82,15 @@ public class StatsManager : MonoBehaviour, ISaveable
                 PointsSpentList[i] = (child.GetComponent<TalentBarControl>().Data.pointsUsed);
                 i++;
             }
+        }
+
+        SetBulletStats();
+        SetLevelStats();
+
+        // Loop through and update stats lists at the start
+        for (int i = 0; i < PointsSpentList.Count; i++)
+        {
+            UpdateBulletStats(i);
         }
     }
 
@@ -93,12 +106,87 @@ public class StatsManager : MonoBehaviour, ISaveable
 
     public void SetBulletStats()
     {
-        // Get Bullet Stats
-        ObjectPool.SharedInstance._playerBulletPoolSize = BulletClipSize; // Set Bullet Pool Size from here
-        _playerBulletGameObject.GetComponent<Projectile>().DmgValue = BulletDamage; // Set Bullet Damage from here
-        _playerGameObject.GetComponent<ShootScript>().FireRate = BulletFireRate; // Set Bullet Fire Rate from here
-                                                                                 // BulletRandomness = ; 
-        _playerGameObject.GetComponent<ShootScript>().BulletSpeed = BulletVelocity; // Set Bullet Velocity From here
+        // If New player, create a list
+        // Get List of base values
+        if (DefaultBulletValues.Count == 0)
+        {
+            DefaultBulletValues.Add((Mathf.Round(BulletClipSize))); // 0 decimal place
+            DefaultBulletValues.Add((Mathf.Round(BulletDamage))); // 0 decimal place
+            DefaultBulletValues.Add((Mathf.Round(BulletFireRate * 1000.0f)) * 0.001f); // 3 decimal place
+            DefaultBulletValues.Add((Mathf.Round(BulletRandomness * 100.0f)) * 0.01f); // 2 decimal place
+            DefaultBulletValues.Add((Mathf.Round(BulletVelocity * 10.0f)) * 0.1f); // 1 decimal place
+        }
+        else
+        {
+            DefaultBulletValues[0] = (Mathf.Round(BulletClipSize));
+            DefaultBulletValues[1] = (Mathf.Round(BulletDamage));
+            DefaultBulletValues[2] = (Mathf.Round(BulletFireRate * 1000.0f)) * 0.001f;
+            DefaultBulletValues[3] = (Mathf.Round(BulletRandomness * 100.0f)) * 0.01f;
+            DefaultBulletValues[4] = (Mathf.Round(BulletVelocity * 10.0f)) * 0.1f;
+        }
+
+        // Create a List of BulletStats
+        if (BulletStatsList.Count == 0)
+        {
+            BulletStatsList.Add((Mathf.Round(BulletClipSize)));
+            BulletStatsList.Add((Mathf.Round(BulletDamage)));
+            BulletStatsList.Add((Mathf.Round(BulletFireRate * 1000.0f)) * 0.001f);
+            BulletStatsList.Add((Mathf.Round(BulletRandomness * 100.0f)) * 0.01f);
+            BulletStatsList.Add((Mathf.Round(BulletVelocity * 10.0f)) * 0.1f);
+
+            // Set the Default Values for the stats
+            ObjectPool.SharedInstance._playerBulletPoolSize = (int)DefaultBulletValues[0]; // Set Bullet Pool Size from here
+            _playerBulletGameObject.GetComponent<Projectile>().DmgValue = (int)DefaultBulletValues[1]; // Set Bullet Damage from here
+            _playerGameObject.GetComponent<ShootScript>().FireRate = DefaultBulletValues[2]; // Set Bullet Fire Rate from here
+                                                                                             // BulletRandomness = ; 
+            _playerGameObject.GetComponent<ShootScript>().BulletSpeed = DefaultBulletValues[4]; // Set Bullet Velocity From here
+        }
+
+        // Create a List of Multipliers
+        if (BulletMultipliersList.Count == 0)
+        {
+            BulletMultipliersList.Add(MultBulletClipSize);
+            BulletMultipliersList.Add(MultBulletDamage);
+            BulletMultipliersList.Add(MultBulletFireRate);
+            BulletMultipliersList.Add(MultBulletRandomness);
+            BulletMultipliersList.Add(MultBulletVelocity);
+        }
+    }
+
+
+    public void UpdateBulletStats(int iD)
+    {
+        // If the number of points spent in a skill is 1, set the bullet stat list to base value
+        if (PointsSpentList[iD] == 1)
+        {
+            BulletStatsList[iD] = DefaultBulletValues[iD];
+        }
+        else if (PointsSpentList[iD] > 1)
+        {
+            if (iD != 2)
+            {
+                BulletStatsList[iD] = DefaultBulletValues[iD] + ((PointsSpentList[iD] - 1) * BulletMultipliersList[iD]); // Clip size
+
+            }
+            else
+            {
+                BulletStatsList[iD] = DefaultBulletValues[iD] * (Mathf.Pow(BulletMultipliersList[iD], (PointsSpentList[iD] - 1))); // Fire Rate
+            }
+        }
+
+        /*             BulletStatsList[0] = DefaultBulletValues[i] + ((PointsSpentList[i] - 1) * BulletMultipliersList[i]); // Clip size
+                    BulletStatsList[1] = DefaultBulletValues[i] + ((PointsSpentList[i] - 1) * BulletMultipliersList[i]); // Damage
+                    BulletStatsList[2] = DefaultBulletValues[i] * (Mathf.Pow(BulletMultipliersList[i], (PointsSpentList[i] - 1))); // Fire Rate
+                    BulletStatsList[3] = DefaultBulletValues[i] + ((PointsSpentList[i] - 1) * BulletMultipliersList[i]); // Randomness
+                    BulletStatsList[4] = DefaultBulletValues[i] + ((PointsSpentList[i] - 1) * BulletMultipliersList[i]); // Velocity
+         */
+
+        // Update Bullet Stats
+        ObjectPool.SharedInstance._playerBulletPoolSize = (int)BulletStatsList[0]; // Set Bullet Pool Size from here
+        _playerBulletGameObject.GetComponent<Projectile>().DmgValue = (int)BulletStatsList[1]; // Set Bullet Damage from here
+        _playerGameObject.GetComponent<ShootScript>().FireRate = BulletStatsList[2]; // Set Bullet Fire Rate from here
+                                                                                     // BulletRandomness = ; 
+        _playerGameObject.GetComponent<ShootScript>().BulletSpeed = BulletStatsList[4]; // Set Bullet Velocity From here
     }
 
 
@@ -121,11 +209,19 @@ public class StatsManager : MonoBehaviour, ISaveable
         txt_moveSpeed.SetText(($"{MovementSpeed:#0}"));
 
         // Bullet Text
-        txt_clipSize.SetText(($"{BulletClipSize:#0}"));
-        txt_damage.SetText(($"{BulletDamage:#0}"));
-        txt_fireRate.SetText(($"{BulletFireRate:#0}"));
-        //txt_randomness.SetText(($"{PlayerHealth:#0}"));
-        txt_velocity.SetText(($"{BulletVelocity:#0}"));
+        txt_clipSize.SetText(($"{BulletStatsList[0]:#0}"));
+        txt_damage.SetText(($"{BulletStatsList[1]:#0}"));
+        txt_fireRate.SetText(($"{BulletStatsList[2]:#0.000}"));
+        txt_randomness.SetText(($"{BulletStatsList[3]:#0.00}"));
+        txt_velocity.SetText(($"{BulletStatsList[4]:#0.0}"));
+    }
+
+
+    public void AssignedPointsFunction(int iD)
+    {
+        SetLevelStats();
+        UpdateBulletStats(iD);
+        SetStatsText();
     }
 
 
@@ -133,33 +229,25 @@ public class StatsManager : MonoBehaviour, ISaveable
     // SAVING AND LOADING //
     public void PopulateSaveData(SaveData a_SaveData)
     {
+        // Level Stats
         a_SaveData.m_AvailableTalentPoint = AvailableTalentPoints;
         a_SaveData.m_UsedTalentPoint = UsedTalentPoints;
-        a_SaveData.m_AssignedPointsList = PointsSpentList;
 
-        // List for storing points assigned to each skill
-        if (a_SaveData.m_AssignedPointsList.Count < PointsSpentList.Count)
-        {
-            for (int i = 0; i < PointsSpentList.Count; i++)
-            {
-                a_SaveData.m_AssignedPointsList.Add(PointsSpentList[i]);
-            }
-        }
-        else
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                a_SaveData.m_AssignedPointsList[j] = PointsSpentList[j];
-            }
-        }
+        // Lists
+        a_SaveData.m_AssignedPointsList = PointsSpentList;
+        a_SaveData.m_DefaultBulletValues = DefaultBulletValues;
+        a_SaveData.m_BulletStatsList = BulletStatsList;
+        a_SaveData.m_BulletMultipliersList = BulletMultipliersList;
     }
 
     public void LoadFromSaveData(SaveData a_SaveData)
     {
+        // Score stats
         sm_ScorePerKill = a_SaveData.m_ScorePerKill;
         sm_ScorePerSecond = a_SaveData.m_ScorePerSecond;
         sm_SPSTimer = a_SaveData.m_SPSTimer;
 
+        // Level stats
         ls_Level = a_SaveData.m_PlayerLevel;
         ls_CurrentXp = a_SaveData.m_PlayerCurrentXp;
         ls_RequiredXp = a_SaveData.m_PlayerRequiredXp;
@@ -167,35 +255,11 @@ public class StatsManager : MonoBehaviour, ISaveable
         AvailableTalentPoints = a_SaveData.m_AvailableTalentPoint;
         UsedTalentPoints = a_SaveData.m_UsedTalentPoint;
 
+        // Lists
         PointsSpentList = a_SaveData.m_AssignedPointsList;
-
-        // List for loading points assigned to each skill
-        if (a_SaveData.m_AssignedPointsList.Count == 0)
-        {
-            // Loop through the upgrades parent to add points used in each skill to a list
-            if (PointsSpentList.Count == 0)
-            {
-                foreach (Transform child in _upgradesParentGameObject.transform)
-                {
-                    PointsSpentList.Add(child.GetComponent<TalentBarControl>().Data.pointsUsed);
-                }
-            }
-
-            int i = 0;
-
-            foreach (Transform child in _upgradesParentGameObject.transform)
-            {
-                PointsSpentList[i] = (child.GetComponent<TalentBarControl>().Data.pointsUsed);
-                i++;
-            }
-        }
-        else
-        {
-            for (int j = 0; j < PointsSpentList.Count; j++)
-            {
-                PointsSpentList[j] = a_SaveData.m_AssignedPointsList[j];
-            }
-        }
+        DefaultBulletValues = a_SaveData.m_DefaultBulletValues;
+        BulletStatsList = a_SaveData.m_BulletStatsList;
+        BulletMultipliersList = a_SaveData.m_BulletMultipliersList;
     }
     // SAVING AND LOADING //
     ////////////////////////

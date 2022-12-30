@@ -20,6 +20,9 @@ public class SaveData
     public int m_UsedTalentPoint;
     public int m_AvailableTalentPoint;
     public List<int> m_AssignedPointsList = new List<int>();
+    public List<float> m_DefaultBulletValues = new List<float>();
+    public List<float> m_BulletStatsList = new List<float>();
+    public List<float> m_BulletMultipliersList = new List<float>();
 
     // Player Score
     public int m_ScorePerKill;

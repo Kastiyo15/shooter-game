@@ -4,9 +4,9 @@ using UnityEngine;
 public class ShootScript : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] public float FireRate = 1f; //Base value of 1
+    [SerializeField] public float FireRate; //Base value of 1
     private float _timeBetweenShots;
-    [SerializeField] public int BulletSpeed = 15; // Base value of 15
+    [SerializeField] public float BulletSpeed; // Base value of 15
 
     [Header("References")]
     [SerializeField] public GameObject _bulletPrefab;

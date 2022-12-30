@@ -37,10 +37,10 @@ public class UpgradeBar : MonoBehaviour, ISelectHandler, IDeselectHandler
         // Start coroutine when points are less than maximum and cooldown is not active
         if (UniquePointsUsed < _pointsMaximum && _cooldown == false && StatsManager.Instance.AvailableTalentPoints > 0)
         {
-            //UniquePointsUsed++;
-            StatsManager.Instance.PointsSpentList[_iD]++;
+            UniquePointsUsed++; // Variable used in this script to take note of how many points are in each skill
+            StatsManager.Instance.PointsSpentList[_iD]++; // Update the statsmanager list to save points spent
 
-            UpdateStatsManagerPoints(0);
+            UpdateStatsManager(0); // Update stats to reflect changes made here
 
             StartCoroutine(IncreaseBar());
 
@@ -54,10 +54,10 @@ public class UpgradeBar : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         if (UniquePointsUsed > 1 && _cooldown == false && StatsManager.Instance.AvailableTalentPoints != StatsManager.Instance.ls_TalentPoint)
         {
-            //UniquePointsUsed--;
+            UniquePointsUsed--;
             StatsManager.Instance.PointsSpentList[_iD]--;
 
-            UpdateStatsManagerPoints(1);
+            UpdateStatsManager(1); // Update stats to reflect changes made here
 
             StartCoroutine(DecreaseBar());
 
@@ -66,8 +66,8 @@ public class UpgradeBar : MonoBehaviour, ISelectHandler, IDeselectHandler
     }
 
 
-    // 
-    private void UpdateStatsManagerPoints(int i)
+    // Update values in the StatManager
+    private void UpdateStatsManager(int i)
     {
         if (i == 0)
         {
@@ -77,7 +77,8 @@ public class UpgradeBar : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             StatsManager.Instance.UsedTalentPoints -= 1;
         }
-        StatsManager.Instance.SetLevelStats();
+
+        StatsManager.Instance.AssignedPointsFunction(_iD);
     }
 
 

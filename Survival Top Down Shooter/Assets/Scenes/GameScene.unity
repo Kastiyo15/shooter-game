@@ -5907,11 +5907,19 @@ MonoBehaviour:
   PlayerHealth: 0
   PlayerDefence: 0
   MovementSpeed: 3
-  BulletClipSize: 30
-  BulletDamage: 100
-  BulletFireRate: 0.05
+  BulletClipSize: 10
+  BulletDamage: 50
+  BulletFireRate: 1
   BulletRandomness: 0
   BulletVelocity: 15
+  MultBulletClipSize: 2
+  MultBulletDamage: 10
+  MultBulletFireRate: 0.8
+  MultBulletRandomness: 0.01
+  MultBulletVelocity: 1.5
+  DefaultBulletValues: []
+  BulletStatsList: []
+  BulletMultipliersList: []
   sm_ScorePerKill: 0
   sm_ScorePerSecond: 0
   sm_SPSTimer: 0
@@ -15020,7 +15028,7 @@ MonoBehaviour:
   _rangeY: 0
   _playerX: 0
   _playerY: 0
-  _spawnInterval: 0.1
+  _spawnInterval: 0.75
   _spawnMax: 10
   SpawnCount: 0
   _player: {fileID: 1249662918}
@@ -19754,14 +19762,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5928458574748499120, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: db527f23ad13b224faae0bf3d2331423, type: 3}
-    - target: {fileID: 5928458574748499120, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 5928458574748499121, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -19806,25 +19806,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5928458574748499124, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
-      propertyPath: FireRate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928458574748499124, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
-      propertyPath: BulletSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928458574748499125, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
-      propertyPath: Speed
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499128, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928458574748499128, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499129, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: Healed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
