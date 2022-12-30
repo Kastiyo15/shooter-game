@@ -23,12 +23,12 @@ public class StatsManager : MonoBehaviour, ISaveable
     public int BulletClipSize = 10;
     public int BulletDamage = 50;
     public float BulletFireRate = 1.000f;
-    public float BulletRandomness = 0.1f;
+    public float BulletRandomness = 0f;
     public float BulletVelocity = 15f;  // Below are multipliers for respective skills
-    public int MultBulletClipSize = 2;
-    public int MultBulletDamage = 10;
+    public int MultBulletClipSize = 4;
+    public int MultBulletDamage = 20;
     public float MultBulletFireRate = 0.800f;
-    public float MultBulletRandomness = 0.01f;
+    public float MultBulletRandomness = 2.5f;
     public float MultBulletVelocity = 1.5f;
     public List<float> DefaultBulletValues = new List<float>();
     public List<float> BulletStatsList = new List<float>();
@@ -113,7 +113,7 @@ public class StatsManager : MonoBehaviour, ISaveable
             DefaultBulletValues.Add((Mathf.Round(BulletClipSize))); // 0 decimal place
             DefaultBulletValues.Add((Mathf.Round(BulletDamage))); // 0 decimal place
             DefaultBulletValues.Add((Mathf.Round(BulletFireRate * 1000.0f)) * 0.001f); // 3 decimal place
-            DefaultBulletValues.Add((Mathf.Round(BulletRandomness * 100.0f)) * 0.01f); // 2 decimal place
+            DefaultBulletValues.Add((Mathf.Round(BulletRandomness * 10.0f)) * 0.1f); // 2 decimal place
             DefaultBulletValues.Add((Mathf.Round(BulletVelocity * 10.0f)) * 0.1f); // 1 decimal place
         }
         else
@@ -121,7 +121,7 @@ public class StatsManager : MonoBehaviour, ISaveable
             DefaultBulletValues[0] = (Mathf.Round(BulletClipSize));
             DefaultBulletValues[1] = (Mathf.Round(BulletDamage));
             DefaultBulletValues[2] = (Mathf.Round(BulletFireRate * 1000.0f)) * 0.001f;
-            DefaultBulletValues[3] = (Mathf.Round(BulletRandomness * 100.0f)) * 0.01f;
+            DefaultBulletValues[3] = (Mathf.Round(BulletRandomness * 10.0f)) * 0.1f;
             DefaultBulletValues[4] = (Mathf.Round(BulletVelocity * 10.0f)) * 0.1f;
         }
 
@@ -131,14 +131,14 @@ public class StatsManager : MonoBehaviour, ISaveable
             BulletStatsList.Add((Mathf.Round(BulletClipSize)));
             BulletStatsList.Add((Mathf.Round(BulletDamage)));
             BulletStatsList.Add((Mathf.Round(BulletFireRate * 1000.0f)) * 0.001f);
-            BulletStatsList.Add((Mathf.Round(BulletRandomness * 100.0f)) * 0.01f);
+            BulletStatsList.Add((Mathf.Round(BulletRandomness * 10.0f)) * 0.1f);
             BulletStatsList.Add((Mathf.Round(BulletVelocity * 10.0f)) * 0.1f);
 
             // Set the Default Values for the stats
             ObjectPool.SharedInstance._playerBulletPoolSize = (int)DefaultBulletValues[0]; // Set Bullet Pool Size from here
             _playerBulletGameObject.GetComponent<Projectile>().DmgValue = (int)DefaultBulletValues[1]; // Set Bullet Damage from here
             _playerGameObject.GetComponent<ShootScript>().FireRate = DefaultBulletValues[2]; // Set Bullet Fire Rate from here
-                                                                                             // BulletRandomness = ; 
+            _playerGameObject.GetComponent<ShootScript>().BulletSpread = DefaultBulletValues[3]; // BulletRandomness
             _playerGameObject.GetComponent<ShootScript>().BulletSpeed = DefaultBulletValues[4]; // Set Bullet Velocity From here
         }
 
@@ -185,7 +185,7 @@ public class StatsManager : MonoBehaviour, ISaveable
         ObjectPool.SharedInstance._playerBulletPoolSize = (int)BulletStatsList[0]; // Set Bullet Pool Size from here
         _playerBulletGameObject.GetComponent<Projectile>().DmgValue = (int)BulletStatsList[1]; // Set Bullet Damage from here
         _playerGameObject.GetComponent<ShootScript>().FireRate = BulletStatsList[2]; // Set Bullet Fire Rate from here
-                                                                                     // BulletRandomness = ; 
+        _playerGameObject.GetComponent<ShootScript>().BulletSpread = BulletStatsList[3]; // BulletRandomness
         _playerGameObject.GetComponent<ShootScript>().BulletSpeed = BulletStatsList[4]; // Set Bullet Velocity From here
     }
 

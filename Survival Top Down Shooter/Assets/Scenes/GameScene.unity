@@ -5912,10 +5912,10 @@ MonoBehaviour:
   BulletFireRate: 1
   BulletRandomness: 0
   BulletVelocity: 15
-  MultBulletClipSize: 2
-  MultBulletDamage: 10
+  MultBulletClipSize: 4
+  MultBulletDamage: 20
   MultBulletFireRate: 0.8
-  MultBulletRandomness: 0.01
+  MultBulletRandomness: 2.5
   MultBulletVelocity: 1.5
   DefaultBulletValues: []
   BulletStatsList: []
@@ -15028,7 +15028,7 @@ MonoBehaviour:
   _rangeY: 0
   _playerX: 0
   _playerY: 0
-  _spawnInterval: 0.75
+  _spawnInterval: 1
   _spawnMax: 10
   SpawnCount: 0
   _player: {fileID: 1249662918}
@@ -19784,15 +19784,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499121, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499121, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499121, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499121, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -19804,6 +19804,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499121, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458574748499124, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: endAngle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458574748499124, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: BulletSpread
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928458574748499124, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
+      propertyPath: BulletsAmount
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5928458574748499128, guid: 7d51def053b0d7848af03de8206f116c, type: 3}
