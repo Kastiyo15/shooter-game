@@ -10,7 +10,7 @@ public class ObjectPool : MonoBehaviour
     // Pool Player Bullets
     [SerializeField] private GameObject _playerBullet;
     private List<GameObject> _playerBulletPool;
-    [SerializeField] private int _playerBulletPoolSize;
+    [SerializeField] public int _playerBulletPoolSize;
 
 
     // Pool Player Bullets
@@ -49,13 +49,15 @@ public class ObjectPool : MonoBehaviour
     void Start()
     {
         // PLAYER BULLETS // 
+        _playerBulletPoolSize = StatsManager.Instance.BulletClipSize;
+
         _playerBulletPool = new List<GameObject>();
         // For loop,instantiate objects in the pooled amount, but keep a reference of them
         for (int i = 0; i < _playerBulletPoolSize; i++)
         {
             // Create gameobjects, but set them inactive, add them to the list
             GameObject tmp;
-            tmp = Instantiate(_playerBullet);
+            tmp = Instantiate(_playerBullet, this.transform);
             tmp.SetActive(false);
             _playerBulletPool.Add(tmp);
         }
@@ -67,7 +69,7 @@ public class ObjectPool : MonoBehaviour
         {
             // Create gameobjects, but set them inactive, add them to the list
             GameObject tmp;
-            tmp = Instantiate(_playerBulletFX);
+            tmp = Instantiate(_playerBulletFX, this.transform);
             tmp.SetActive(false);
             _playerBulletFXPool.Add(tmp);
         }
@@ -80,7 +82,7 @@ public class ObjectPool : MonoBehaviour
         {
             // Create gameobjects, but set them inactive, add them to the list
             GameObject tmp;
-            tmp = Instantiate(_enemyBullet);
+            tmp = Instantiate(_enemyBullet, this.transform);
             tmp.SetActive(false);
             _enemyBulletPool.Add(tmp);
         }
@@ -92,7 +94,7 @@ public class ObjectPool : MonoBehaviour
         {
             // Create gameobjects, but set them inactive, add them to the list
             GameObject tmp;
-            tmp = Instantiate(_enemyBulletFX);
+            tmp = Instantiate(_enemyBulletFX, this.transform);
             tmp.SetActive(false);
             _enemyBulletFXPool.Add(tmp);
         }
@@ -111,14 +113,6 @@ public class ObjectPool : MonoBehaviour
             }
         }
 
-
-        // Check if list will be dynamic
-        if (willGrow)
-        {
-            GameObject obj = Instantiate(_playerBullet);
-            _playerBulletPool.Add(obj);
-            return obj;
-        }
         return null;
     }
 

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+[System.Serializable]
 public class GameManager : MonoBehaviour, ISaveable
 {
 
@@ -57,6 +58,11 @@ public class GameManager : MonoBehaviour, ISaveable
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Player01.GetComponent<Health>().Kill();
+        }
+
         // Start Stopwatch when game isn't paused and player isn't dead
         if (!PauseMenu.GameIsPaused && Player01.activeInHierarchy)
         {
@@ -93,8 +99,8 @@ public class GameManager : MonoBehaviour, ISaveable
 
         yield return new WaitForSeconds(1f);
 
-/*         // Save Game Data
-        SaveJsonData(this); */
+        // Save Game Data
+        //SaveJsonData(this);
 
         _deathScreen.GetComponent<PauseMenu>().DeathMenu();
     }
@@ -124,6 +130,12 @@ public class GameManager : MonoBehaviour, ISaveable
 
         // Save Player Level Data
         LevelSystem.Instance.PopulateSaveData(a_SaveData);
+
+        // Save Player Score Data
+        ScoreManager.Instance.PopulateSaveData(a_SaveData);
+
+        // Save data from statsmanager
+        StatsManager.Instance.PopulateSaveData(a_SaveData);
     }
 
 
@@ -151,6 +163,12 @@ public class GameManager : MonoBehaviour, ISaveable
 
         // Load Player Level Data
         LevelSystem.Instance.LoadFromSaveData(a_SaveData);
+
+        // Save Player Score Data
+        ScoreManager.Instance.LoadFromSaveData(a_SaveData);
+
+        // Load data into statsmanager
+        StatsManager.Instance.LoadFromSaveData(a_SaveData);
 
     }
     //////////////////////////////////////////////////////////////////

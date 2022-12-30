@@ -33,6 +33,7 @@ public class FileManager : MonoBehaviour
         try
         {
             result = File.ReadAllText(fullPath);
+            Debug.LogFormat($"Successfully Loaded from {fullPath}.");
             return true;
         }
         catch (Exception e)

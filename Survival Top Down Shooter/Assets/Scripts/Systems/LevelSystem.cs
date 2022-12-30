@@ -4,15 +4,16 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class LevelSystem : MonoBehaviour
+[System.Serializable]
+public class LevelSystem : MonoBehaviour, ISaveable
 {
     public static LevelSystem Instance { get; private set; }
 
     [Header("Level Data")]
-    [SerializeField] private int _level;
-    [SerializeField] private float _currentXp;
-    [SerializeField] private float _requiredXp;
-    [SerializeField] private int _talentPoint;
+    [SerializeField] public int Level = 1;
+    [SerializeField] public float CurrentXp;
+    [SerializeField] public float RequiredXp;
+    [SerializeField] public int TalentPoint;
 
     [Header("Timers")]
     [SerializeField] private float _lerpTimer;
@@ -51,8 +52,8 @@ public class LevelSystem : MonoBehaviour
     {
         // Set Base Stats
         /*     _level = 1;
-            _currentXp = 0;
-            _talentPoint = 0; */
+            CurrentXp = 0;
+            TalentPoint = 0; */
 
 
         // Make Animations inactive
@@ -62,7 +63,7 @@ public class LevelSystem : MonoBehaviour
 
 
         // Initiate Required Xp
-        _requiredXp = CalculateRequiredXp();
+        RequiredXp = CalculateRequiredXp();
 
 
         // Start Coroutines
@@ -77,12 +78,6 @@ public class LevelSystem : MonoBehaviour
         {
             // Every frame, update the UI
             UpdateXpUI();
-
-            // Debug test to add exp
-            if (Input.GetKeyDown(KeyCode.Equals))
-            {
-                GainExperienceFlatRate(73);
-            }
 
             // Call levelup function
             if (_frontBarFill.fillAmount == 1)
@@ -101,12 +96,12 @@ public class LevelSystem : MonoBehaviour
     private IEnumerator SetStats()
     {
         // Set bar fill amount values
-        _frontBarFill.fillAmount = _currentXp / _requiredXp;
-        _backBarFill.fillAmount = _currentXp / _requiredXp;
+        _frontBarFill.fillAmount = CurrentXp / RequiredXp;
+        _backBarFill.fillAmount = CurrentXp / RequiredXp;
 
         // UI Level Text
-        _txtCurrentLevel.text = _level.ToString();
-        _txtNextLevel.text = (_level + 1).ToString();
+        _txtCurrentLevel.text = Level.ToString();
+        _txtNextLevel.text = (Level + 1).ToString();
 
 
         yield return new WaitUntil(() => PauseMenu._dead);
@@ -121,12 +116,12 @@ public class LevelSystem : MonoBehaviour
     public void UpdateXpUI()
     {
         // Update text on bar with points relative to fill amount (genius!)
-        float tmp = Mathf.RoundToInt(_frontBarFill.fillAmount * _requiredXp);
-        float percentage = ((tmp / _requiredXp) * 100.00f);
+        float tmp = Mathf.RoundToInt(_frontBarFill.fillAmount * RequiredXp);
+        float percentage = ((tmp / RequiredXp) * 100.00f);
 
         if (!_leveledUp)
         {
-            _txtXpIndicator.SetText($"<b>EXP:</b>  {tmp} / {_requiredXp}  ({percentage:#0.00}%)");
+            _txtXpIndicator.SetText($"<b>EXP:</b>  {tmp} / {RequiredXp}  ({percentage:#0.00}%)");
         }
         else if (_leveledUp)
         {
@@ -135,7 +130,7 @@ public class LevelSystem : MonoBehaviour
 
 
         // Store decimal fraction of xp
-        float xpFraction = _currentXp / _requiredXp;
+        float xpFraction = CurrentXp / RequiredXp;
         // Store the fill amount of bar
         float FXP = _frontBarFill.fillAmount;
 
@@ -145,7 +140,7 @@ public class LevelSystem : MonoBehaviour
         {
             // Fill the Back bar
             _delayTimer += Time.deltaTime;
-            _backBarFill.fillAmount = Mathf.Lerp(_backBarFill.fillAmount, xpFraction, (_delayTimer / (20 * _timeMult))); // The higher the multiplier the slower the lerp
+            _backBarFill.fillAmount = Mathf.Lerp(_backBarFill.fillAmount, xpFraction, (_delayTimer / (15 * _timeMult))); // The higher the multiplier the slower the lerp
 
 
             // Then fill the front bar
@@ -174,7 +169,7 @@ public class LevelSystem : MonoBehaviour
     {
         Debug.Log("Exp Gained");
         // Reset the timers after adding xp
-        _currentXp += xpGained;
+        CurrentXp += xpGained;
         _lerpTimer = 0;
         _delayTimer = 0;
     }
@@ -183,14 +178,14 @@ public class LevelSystem : MonoBehaviour
     // Add experience scalable
     public void GainExperienceScalable(float xpGained, int passedLevel)
     {
-        if (passedLevel < _level)
+        if (passedLevel < Level)
         {
-            float multiplier = 1 + (_level - passedLevel) * 0.1f;
-            _currentXp += xpGained * multiplier;
+            float multiplier = 1 + (Level - passedLevel) * 0.1f;
+            CurrentXp += xpGained * multiplier;
         }
         else
         {
-            _currentXp += xpGained;
+            CurrentXp += xpGained;
         }
         _lerpTimer = 0f;
         _delayTimer = 0;
@@ -225,21 +220,21 @@ public class LevelSystem : MonoBehaviour
         _leveledUp = true;
 
         // Experience system
-        _level++;
+        Level++;
         _frontBarFill.fillAmount = 0f;
         _backBarFill.fillAmount = 0f;
-        _currentXp = Mathf.RoundToInt(_currentXp - _requiredXp);
+        CurrentXp = Mathf.RoundToInt(CurrentXp - RequiredXp);
 
-        _requiredXp = CalculateRequiredXp();
+        RequiredXp = CalculateRequiredXp();
 
         // UI Level Text
-        _txtCurrentLevel.text = _level.ToString();
-        _txtNextLevel.text = (_level + 1).ToString();
+        _txtCurrentLevel.text = Level.ToString();
+        _txtNextLevel.text = (Level + 1).ToString();
 
         // Talent Points
-        _talentPoint++;
+        TalentPoint++;
 
-        if (_currentXp >= _requiredXp)
+        if (CurrentXp >= RequiredXp)
         {
             StartCoroutine(LevelUp());
         }
@@ -252,7 +247,7 @@ public class LevelSystem : MonoBehaviour
         int solveForRequiredXp = 0;
 
         // Loop for everytime we have leveled up
-        for (int levelCycle = 1; levelCycle <= _level; levelCycle++)
+        for (int levelCycle = 1; levelCycle <= Level; levelCycle++)
         {
             // Runescape Algorithm
             solveForRequiredXp += (int)Mathf.Floor(levelCycle + _additionMult * Mathf.Pow(_powerMult, levelCycle / _divisionMult));
@@ -274,19 +269,19 @@ public class LevelSystem : MonoBehaviour
     // SAVING AND LOADING //
     public void PopulateSaveData(SaveData a_SaveData)
     {
-        a_SaveData.m_PlayerLevel = _level;
-        a_SaveData.m_PlayerCurrentXp = _currentXp;
-        a_SaveData.m_PlayerRequiredXp = _requiredXp;
-        a_SaveData.m_PlayerTalentPoint = _talentPoint;
+        a_SaveData.m_PlayerLevel = Level;
+        a_SaveData.m_PlayerCurrentXp = CurrentXp;
+        a_SaveData.m_PlayerRequiredXp = RequiredXp;
+        a_SaveData.m_PlayerTalentPoint = TalentPoint;
     }
 
 
     public void LoadFromSaveData(SaveData a_SaveData)
     {
-        _level = a_SaveData.m_PlayerLevel;
-        _currentXp = a_SaveData.m_PlayerCurrentXp;
-        _requiredXp = a_SaveData.m_PlayerRequiredXp;
-        _talentPoint = a_SaveData.m_PlayerTalentPoint;
+        Level = a_SaveData.m_PlayerLevel;
+        CurrentXp = a_SaveData.m_PlayerCurrentXp;
+        RequiredXp = a_SaveData.m_PlayerRequiredXp;
+        TalentPoint = a_SaveData.m_PlayerTalentPoint;
     }
     // SAVING AND LOADING //
     ////////////////////////

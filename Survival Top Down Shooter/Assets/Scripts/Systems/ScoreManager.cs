@@ -4,7 +4,8 @@ using TMPro;
 using Scripts.Systems.MessageSystem;
 
 
-public class ScoreManager : MonoBehaviour
+[System.Serializable]
+public class ScoreManager : MonoBehaviour, ISaveable
 {
     public static ScoreManager Instance { get; private set; }
 
@@ -90,21 +91,21 @@ public class ScoreManager : MonoBehaviour
     {
         _scoreText.text = string.Format("{0}", Score);
 
-/*         if (Score < 1000)
-        {
-            //_scoreText.text = string.Format("<b>Score:</b> {0:0}", Score);
-            _scoreText.text = string.Format("{0:0}", Score);
-        }
-        else if (Score >= 1000 && Score < 1000000)
-        {
-            //_scoreText.text = string.Format("Score: {0:0,000}", Score);
-            _scoreText.text = string.Format("{0:0,000}", Score);
-        }
-        else if (Score >= 1000000 && Score < 1000000000)
-        {
-            //_scoreText.text = string.Format("Score: {0:0,000,000}", Score);
-            _scoreText.text = string.Format("{0:0,000,000}", Score);
-        } */
+        /*         if (Score < 1000)
+                {
+                    //_scoreText.text = string.Format("<b>Score:</b> {0:0}", Score);
+                    _scoreText.text = string.Format("{0:0}", Score);
+                }
+                else if (Score >= 1000 && Score < 1000000)
+                {
+                    //_scoreText.text = string.Format("Score: {0:0,000}", Score);
+                    _scoreText.text = string.Format("{0:0,000}", Score);
+                }
+                else if (Score >= 1000000 && Score < 1000000000)
+                {
+                    //_scoreText.text = string.Format("Score: {0:0,000,000}", Score);
+                    _scoreText.text = string.Format("{0:0,000,000}", Score);
+                } */
     }
 
 
@@ -157,4 +158,24 @@ public class ScoreManager : MonoBehaviour
     {
         Score += BulletsFiredScore + TotalDamageScore;
     }
+
+
+    ////////////////////////
+    // SAVING AND LOADING //
+    public void PopulateSaveData(SaveData a_SaveData)
+    {
+        a_SaveData.m_ScorePerKill = ScorePerKill; // base value, each enemy has its own score
+        a_SaveData.m_ScorePerSecond = ScorePerSecond;
+        a_SaveData.m_SPSTimer = SPSTimer;
+    }
+
+
+    public void LoadFromSaveData(SaveData a_SaveData)
+    {
+        ScorePerKill = a_SaveData.m_ScorePerKill;
+        ScorePerSecond = a_SaveData.m_ScorePerSecond;
+        SPSTimer = a_SaveData.m_SPSTimer;
+    }
+    // SAVING AND LOADING //
+    ////////////////////////
 }

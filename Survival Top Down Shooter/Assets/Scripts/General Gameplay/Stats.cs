@@ -10,7 +10,7 @@ public class Stats : MonoBehaviour
 
 
     // Used to calculate SPK * Enemy value
-    public int _killValue;
+    [SerializeField] private int _killValue;
 
 
     // Run before anything else

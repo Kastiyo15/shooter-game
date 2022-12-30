@@ -4,9 +4,9 @@ using UnityEngine;
 public class ShootScript : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private float _fireRate;
+    [SerializeField] public float FireRate = 1f; //Base value of 1
     private float _timeBetweenShots;
-    [SerializeField] private int _bulletSpeed;
+    [SerializeField] public int BulletSpeed = 15; // Base value of 15
 
     [Header("References")]
     [SerializeField] public GameObject _bulletPrefab;
@@ -18,7 +18,7 @@ public class ShootScript : MonoBehaviour
 
     void Start()
     {
-        _timeBetweenShots = _fireRate;
+        _timeBetweenShots = FireRate;
         _playerBool = CompareTag("Player");
         _enemyBool = CompareTag("Enemy");
         _player = GameManager.FindObjectOfType<GameManager>().Player01;
@@ -72,7 +72,7 @@ public class ShootScript : MonoBehaviour
 
             // Projectile Velocity
             Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-            rb.AddForce(_firePoint.up * _bulletSpeed, ForceMode2D.Impulse);
+            rb.AddForce(_firePoint.up * BulletSpeed, ForceMode2D.Impulse);
         }
 
         if (CompareTag("Player"))
@@ -84,10 +84,10 @@ public class ShootScript : MonoBehaviour
 
             // Projectile Velocity
             Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-            rb.AddForce(_firePoint.up * _bulletSpeed, ForceMode2D.Impulse);
+            rb.AddForce(_firePoint.up * BulletSpeed, ForceMode2D.Impulse);
 
         }
 
-        _timeBetweenShots = _fireRate;
+        _timeBetweenShots = FireRate;
     }
 }

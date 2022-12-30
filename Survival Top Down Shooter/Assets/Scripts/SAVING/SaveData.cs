@@ -17,6 +17,14 @@ public class SaveData
     public float m_PlayerCurrentXp;
     public float m_PlayerRequiredXp;
     public int m_PlayerTalentPoint;
+    public int m_UsedTalentPoint;
+    public int m_AvailableTalentPoint;
+    public List<int> m_AssignedPointsList = new List<int>();
+
+    // Player Score
+    public int m_ScorePerKill;
+    public int m_ScorePerSecond;
+    public float m_SPSTimer;
 
 
     // First method to convert class to Json string

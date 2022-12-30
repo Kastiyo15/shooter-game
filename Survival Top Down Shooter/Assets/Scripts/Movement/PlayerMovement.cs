@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     // Variables
     [SerializeField] Rigidbody2D _rb;
     [SerializeField] Camera _cam;
-    [SerializeField] float _speed;
+    public float _speed;
 
     private Vector2 _moveVelocity;
     private Vector2 _mousePos;
