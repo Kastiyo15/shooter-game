@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 939852520499113781}
   - component: {fileID: 1967637739935771885}
   - component: {fileID: 138312584933034468}
+  - component: {fileID: 7719703764063861451}
   m_Layer: 8
   m_Name: EBulletPrefab1
   m_TagString: Enemy
@@ -138,8 +139,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DmgValue: 50
-  _effectPrefab: {fileID: 7722546575592812874, guid: 6caa56421b43b03459d6ec36cf449af7, type: 3}
-  _rb: {fileID: 939852520499113781}
+--- !u!95 &7719703764063861451
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5279461290671761552}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 422652382bad97b40aa4b1c17e278eda, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7300839624908189955
 GameObject:
   m_ObjectHideFlags: 0

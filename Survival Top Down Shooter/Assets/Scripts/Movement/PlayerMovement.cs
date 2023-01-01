@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         // Move player based on the move inputs variable from Update()
-        _rb.MovePosition(_rb.position + _moveVelocity * _speed * Time.deltaTime);
+        _rb.MovePosition(_rb.position + _moveVelocity * _speed * Time.fixedDeltaTime);
 
         // Rotate player based on where the mouse is looking
         Vector2 lookDir = _mousePos - _rb.position;
