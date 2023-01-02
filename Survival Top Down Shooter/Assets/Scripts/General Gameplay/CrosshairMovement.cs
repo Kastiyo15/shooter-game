@@ -33,12 +33,10 @@ public class CrosshairMovement : MonoBehaviour
     void FixedUpdate()
     {
         // Smooth movement
-        transform.position = Vector3.Slerp(transform.position, _finalPos, _speed * Time.deltaTime);
+        transform.position = Vector3.Slerp(transform.position, _finalPos, _speed * Time.fixedDeltaTime);
 
         // Rotate the crosshair for fun
-        transform.Rotate(Vector3.forward * _speed * Time.deltaTime);
-
-
+        transform.Rotate(Vector3.forward * _speed * Time.fixedDeltaTime);
 
         // transform.position = Vector3.Lerp(this.transform.position, _mousePos, _speed * Time.deltaTime);
     }

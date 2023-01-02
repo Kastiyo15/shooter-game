@@ -18,6 +18,7 @@ public class ShootScript : MonoBehaviour
     [SerializeField] public GameObject _bulletPrefab;
     [SerializeField] private Transform _firePoint;
     [SerializeField] private GameObject _player;
+    [SerializeField] private LayerMask _playerLayer; // The Player Physics Layer, used for raycasting
     private bool _playerBool;
     private bool _enemyBool;
 
@@ -42,14 +43,28 @@ public class ShootScript : MonoBehaviour
                 Shoot();
             }
 
-            // Run Enemy shoot function
+            // Enemy shoot function, once in minimum distance
             if (_enemyBool && _player.activeInHierarchy)
             {
-                Enemy me = this.gameObject.GetComponent<Enemy>();
-                if (me.finalDistance < (me.maximumDistance - 15))
+                // Initilaise Enemy component
+                Enemy enemy = this.gameObject.GetComponent<Enemy>();
+
+                // Use a raycast to detect if a collider is in sight (within the VisionDistance range)
+                RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, enemy.VisionDistance, _playerLayer.value);
+                if (hitInfo.collider != null && hitInfo.collider.tag == "Player")
                 {
+                    Debug.DrawLine(transform.position, hitInfo.point, Color.green);
                     Shoot();
                 }
+                else
+                {
+                    Debug.DrawLine(transform.position, transform.position + transform.up * enemy.VisionDistance, Color.red);
+                }
+
+                /*                 if (enemy.finalDistance < (enemy.maximumDistance - 15))
+                                {
+                                    Shoot();
+                                } */
             }
         }
         else
@@ -62,34 +77,34 @@ public class ShootScript : MonoBehaviour
     // Create bullet at firePoint
     void Shoot()
     {
-        // Old Shoot Script
+        // Check if Enemy is shooting
         if (CompareTag("Enemy"))
         {
-            /*             GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, _firePoint.rotation);
-
-                        // Projectile Velocity
-                        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-                        rb.AddForce(_firePoint.up * _bulletSpeed, ForceMode2D.Impulse); */
 
             GameObject obj = ObjectPool.SharedInstance.GetEnemyBulletFromPool();
             if (obj == null) return;
             obj.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
             obj.SetActive(true);
 
+
+            // Play soundfx
+            SoundManager.Instance.PlaySoundEnemy(SoundManager.Instance.EnemyShootClips[Random.Range(0, SoundManager.Instance.PlayerShootClips.Length)]);
+
+
             // Projectile Velocity
             Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
             rb.AddForce(_firePoint.up * BulletSpeed, ForceMode2D.Impulse);
         }
 
+        // Check if Player is shooting
         if (CompareTag("Player"))
         {
-            // Randomise bullet direction when only firing 1 bullet
-            if (BulletsAmount == 0)
+            if (BulletsAmount == 0 && BulletSpread != 0)
             {
                 startAngle = -(_firePoint.eulerAngles.z) + Random.Range(-BulletSpread, BulletSpread);
                 endAngle = -(_firePoint.eulerAngles.z) - Random.Range(-BulletSpread, BulletSpread);
             }
-            else // if you have more than 1 bullet, then do a shotgun arc
+            else if (BulletsAmount > 0) // if you have more than 1 bullet, then do a shotgun arc
             {
                 startAngle = -(_firePoint.eulerAngles.z) + BulletSpread;
                 endAngle = -(_firePoint.eulerAngles.z) - BulletSpread;
@@ -112,13 +127,16 @@ public class ShootScript : MonoBehaviour
                 bul.transform.rotation = _firePoint.rotation;
                 bul.SetActive(true);
 
+
+                // Play soundfx
+                SoundManager.Instance.PlaySoundPlayer(SoundManager.Instance.PlayerShootClips[Random.Range(0, SoundManager.Instance.PlayerShootClips.Length)]);
+
+
                 Rigidbody2D rb = bul.GetComponent<Rigidbody2D>();
                 rb.velocity = (bulDir * BulletSpeed);
 
                 angle += angleStep;
             }
-
-
             /*             var RandXAxis = Random.Range(-BulletSpread, BulletSpread);
 
                         GameObject obj = ObjectPool.SharedInstance.GetPlayerBulletFromPool();
@@ -132,5 +150,6 @@ public class ShootScript : MonoBehaviour
         }
 
         _timeBetweenShots = FireRate;
+
     }
 }

@@ -34,6 +34,10 @@ public class Stats : MonoBehaviour
     // Death function
     public void Die()
     {
+        // Play soundfx
+        SoundManager.Instance.PlaySoundDeath(SoundManager.Instance.DeathClips[Random.Range(0, SoundManager.Instance.DeathClips.Length)]);
+
+
         if (CompareTag("Player"))
         {
             _cameraShake._start = true;

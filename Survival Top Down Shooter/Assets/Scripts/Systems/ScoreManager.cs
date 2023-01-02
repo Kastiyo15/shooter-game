@@ -37,6 +37,7 @@ public class ScoreManager : MonoBehaviour, ISaveable
 
     // Player references
     [Header("Player References")]
+    [SerializeField] private Animator _crosshair;
     [SerializeField] private GameObject _player;
     private GameManager _playerController;
 
@@ -121,6 +122,7 @@ public class ScoreManager : MonoBehaviour, ISaveable
     // Increase Score Bar Values
     public void KillScore(int amount)
     {
+        _crosshair.Play("CrosshairKillFlash", -1, 0f);
         _scoreBar.Change(amount);
     }
 

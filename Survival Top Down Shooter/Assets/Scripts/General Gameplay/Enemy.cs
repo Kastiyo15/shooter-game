@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("Stats")]
     public int _scoreValue;
+    public float VisionDistance; // Used for raycast in the ShootScript;
     [SerializeField] private float _speed;
     [SerializeField] private float _rotationSpeed = 2f;
     private float moveDuration;

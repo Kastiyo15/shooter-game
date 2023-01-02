@@ -24,12 +24,23 @@ public class Projectile : MonoBehaviour
         }
 
         // Once enabled, disable after 3 seconds
-        Invoke("Disable", 3f);
+        Invoke("Disable", 2.5f);
     }
 
 
     private void OnTriggerEnter2D(Collider2D hitInfo)
     {
+         // Play Sound effects
+        if (hitInfo.tag == "Player" || hitInfo.tag == "Enemy")
+        {
+            SoundManager.Instance.PlaySoundImpact(SoundManager.Instance.ImpactClips[Random.Range(0, SoundManager.Instance.DeathClips.Length)]);
+        }
+        else if (hitInfo.tag == "MainCamera")
+        {
+            //SoundManager.Instance.PlaySoundImpact(SoundManager.Instance.ImpactClips[Random.Range(0, SoundManager.Instance.ImpactClips.Length)]);
+        }
+
+
         // Damage using the new Health Script
         if (hitInfo.gameObject.TryGetComponent<Health>(out var health))
         {
